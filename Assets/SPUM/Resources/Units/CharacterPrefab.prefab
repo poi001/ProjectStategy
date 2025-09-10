@@ -1159,7 +1159,7 @@ Animator:
   m_GameObject: {fileID: 3007120138291628186}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e9358c226bb09e24da9c5f7064768810, type: 2}
+  m_Controller: {fileID: 9100000, guid: ce3122cfdd8e40146921d810f804b755, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3503,7 +3503,7 @@ GameObject:
   - component: {fileID: 710980270059557779}
   - component: {fileID: 4446188926391006173}
   m_Layer: 5
-  m_Name: SPUM_20250901114122483
+  m_Name: CharacterPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

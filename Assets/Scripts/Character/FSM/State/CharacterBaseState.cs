@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class CharacterBaseState : IState
 {
@@ -33,14 +30,18 @@ public class CharacterBaseState : IState
 
     protected void StartAnimation_Bool(int animationHash)
     {
-        //stateMachine.character.animator.SetBool(animationHash, true);
+        stateMachine.Character.Animator.SetBool(animationHash, true);
     }
     protected void StopAnimation_Bool(int animationHash)
     {
-        //stateMachine.character.animator.SetBool(animationHash, false);
+        stateMachine.Character.Animator.SetBool(animationHash, false);
     }
     protected void StartAnimation_Trigger(int animationHash)
     {
-        //stateMachine.character.animator.SetTrigger(animationHash);
+        stateMachine.Character.Animator.SetTrigger(animationHash);
+    }
+    protected void ChangeFloatType(int animationHash, float type)
+    {
+        stateMachine.Character.Animator.SetFloat(animationHash, type);
     }
 }

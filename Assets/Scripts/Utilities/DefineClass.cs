@@ -24,6 +24,16 @@ public enum ECharacterType
     Ranged,
     Magician
 }
+public enum EWeaponType
+{
+    None = 0,
+    Normal,
+    Axe,
+    ShortSword,
+    LongSpear,
+    Bow,
+    Staff
+}
 
 public class DefineClass
 {
@@ -31,10 +41,12 @@ public class DefineClass
     public const int NumberOfPlayers = 5;
 
     // 애니메이션 Parameters
-    public const string CharacterAnimationParameter_Idle = "Idle";
-    public const string CharacterAnimationParameter_Move = "Move";
-    public const string CharacterAnimationParameter_Attack = "Attack";
-    public const string CharacterAnimationParameter_Skill = "Skill";
-    public const string CharacterAnimationParameter_Stun = "Stun";
-    public const string CharacterAnimationParameter_Death = "Death";
+    public const string CharacterAnimationParameter_Move = "1_Move";
+    public const string CharacterAnimationParameter_Attack = "2_Attack";
+    public const string CharacterAnimationParameter_Skill = "7_Skill";
+    public const string CharacterAnimationParameter_Stun = "5_Debuff";
+    public const string CharacterAnimationParameter_Death = "4_Death";
+    public const string CharacterAnimationParameter_IsDeath = "isDeath";
+    public const string CharacterAnimationParameter_MeleeType = "MeleeType";
+    public const string CharacterAnimationParameter_WeaponType = "WeaponType";
 }
