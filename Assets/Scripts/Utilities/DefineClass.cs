@@ -17,6 +17,29 @@ public enum ECharacterState
     Stun,
     Death
 }
+public enum ECharacterStatType
+{
+    MaxHP = 0,
+    MaxMP,
+    Armor,
+    MagicResistance,
+    AttackDamage,
+    AbilityPower,
+    AttackSpeed,
+    CriticalProbability,
+    CriticalDamage,
+    MoveSpeed,
+    Stamina,
+    IncreasedDamage,
+    Drain,
+    Range
+}
+public enum EStatApplyType
+{
+    Flat = 0,
+    Percent = 1,
+    Const = 2
+}
 public enum ECharacterType
 {
     None = 0,
