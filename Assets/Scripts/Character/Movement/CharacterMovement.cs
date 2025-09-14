@@ -16,6 +16,7 @@ public class CharacterMovement : MonoBehaviour
         _character = character;
 
         StartCoroutine(FindToTarget_Coroutine(0.15f));
+        _character.StateMachine.ChanageState(_character.StateMachine.moveState);
     }
 
     private void Update()

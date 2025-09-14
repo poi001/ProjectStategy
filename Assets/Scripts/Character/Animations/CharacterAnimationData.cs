@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CharacterAnimationData : MonoBehaviour
+public class CharacterAnimationData
 {
     [SerializeField] private string moveParameterName = DefineClass.CharacterAnimationParameter_Move;
     [SerializeField] private string attackParameterName = DefineClass.CharacterAnimationParameter_Attack;

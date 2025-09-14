@@ -2,17 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StunState : MonoBehaviour
+public class StunState : CharacterBaseState
 {
-    // Start is called before the first frame update
-    void Start()
+    public StunState(CharacterStateMachine characterStateMachine) : base(characterStateMachine)
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Enter()
     {
-        
+        base.Enter();
+        stateMachine.CurrentState = ECharacterState.Stun;
+        StartAnimation_Bool(stateMachine.Character.AnimationData.StunParameterHash);
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        stateMachine.CurrentState = ECharacterState.None;
+        StopAnimation_Bool(stateMachine.Character.AnimationData.StunParameterHash);
+    }
+
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+    }
+
+    public override void Update()
+    {
+        base.Update();
     }
 }

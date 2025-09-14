@@ -24,10 +24,12 @@ public class Character : MonoBehaviour
 
     public void InitCharacter()
     {
+        //Stats = new CharacterStat();
+        StateMachine = new CharacterStateMachine(this);
+        AnimationData = new CharacterAnimationData();
+
         Movement = GetComponent<CharacterMovement>();
         Animator = GetComponentInChildren<Animator>();
-
-        //Stats = new CharacterStat();
 
         Movement.InitMovement(this);
     }

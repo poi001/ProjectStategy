@@ -1,24 +1,26 @@
+using Unity.IO.LowLevel.Unsafe;
+
 public class CharacterStateMachine : BaseStateMachine
 {
     public Character Character { get; private set; }
     public ECharacterState CurrentState;
 
-    //public IdleState idleState { get; }
-    //public MoveState moveState { get; }
-    //public AttackState attackState { get; }
-    //public SkillState skillState { get; }
-    //public StunState stunState { get; }
-    //public DeathState deathState { get; }
+    public IdleState idleState { get; }
+    public MoveState moveState { get; }
+    public AttackState attackState { get; }
+    public SkillState skillState { get; }
+    public StunState stunState { get; }
+    public DeathState deathState { get; }
 
     public CharacterStateMachine(Character character)
     {
         Character = character;
 
-        //idleState = new IdleState(this);
-        //moveState = new MoveState(this);
-        //attackState = new AttackState(this);
-        //skillState = new SkillState(this);
-        //stunState = new StunState(this);
-        //deathState = new DeathState(this);
+        idleState = new IdleState(this);
+        moveState = new MoveState(this);
+        attackState = new AttackState(this);
+        skillState = new SkillState(this);
+        stunState = new StunState(this);
+        deathState = new DeathState(this);
     }
 }
