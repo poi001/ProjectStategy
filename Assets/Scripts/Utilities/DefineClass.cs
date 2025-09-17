@@ -72,4 +72,7 @@ public class DefineClass
     public const string CharacterAnimationParameter_IsDeath = "isDeath";
     public const string CharacterAnimationParameter_MeleeType = "MeleeType";
     public const string CharacterAnimationParameter_WeaponType = "WeaponType";
+
+    // 코루틴 키 값
+    public const string FindToTargetCoroutineKey = "FindToTarget";
 }

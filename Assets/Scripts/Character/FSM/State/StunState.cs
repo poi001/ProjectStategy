@@ -12,14 +12,14 @@ public class StunState : CharacterBaseState
     public override void Enter()
     {
         base.Enter();
-        stateMachine.CurrentState = ECharacterState.Stun;
+        stateMachine.CurrentCharacterState = ECharacterState.Stun;
         StartAnimation_Bool(stateMachine.Character.AnimationData.StunParameterHash);
     }
 
     public override void Exit()
     {
         base.Exit();
-        stateMachine.CurrentState = ECharacterState.None;
+        stateMachine.CurrentCharacterState = ECharacterState.None;
         StopAnimation_Bool(stateMachine.Character.AnimationData.StunParameterHash);
     }
 

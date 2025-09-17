@@ -3,7 +3,7 @@ using Unity.IO.LowLevel.Unsafe;
 public class CharacterStateMachine : BaseStateMachine
 {
     public Character Character { get; private set; }
-    public ECharacterState CurrentState;
+    public ECharacterState CurrentCharacterState;
 
     public IdleState idleState { get; }
     public MoveState moveState { get; }

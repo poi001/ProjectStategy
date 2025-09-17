@@ -12,14 +12,14 @@ public class SkillState : CharacterBaseState
     public override void Enter()
     {
         base.Enter();
-        stateMachine.CurrentState = ECharacterState.Skill;
+        stateMachine.CurrentCharacterState = ECharacterState.Skill;
         StartAnimation_Trigger(stateMachine.Character.AnimationData.SkillParameterHash);
     }
 
     public override void Exit()
     {
         base.Exit();
-        stateMachine.CurrentState = ECharacterState.None;
+        stateMachine.CurrentCharacterState = ECharacterState.None;
     }
 
     public override void PhysicsUpdate()

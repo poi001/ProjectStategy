@@ -10,6 +10,8 @@ public class Character : MonoBehaviour
     public CharacterAnimationData AnimationData { get; protected set; }
     public CharacterStat Stats { get; protected set; }
 
+    [SerializeField]
+    private CharacterStatScriptableObject statSO;
     public bool IsPlayerTeam { get; private set; } = true;
     //public EWeaponType CharacterType { get; private set; } = EWeaponType.None;
 
@@ -24,11 +26,12 @@ public class Character : MonoBehaviour
 
     public void InitCharacter()
     {
-        //Stats = new CharacterStat();
+        Stats = new CharacterStat(statSO);
         StateMachine = new CharacterStateMachine(this);
         AnimationData = new CharacterAnimationData();
 
         Movement = GetComponent<CharacterMovement>();
+        if (Movement == null) Movement = gameObject.AddComponent<CharacterMovement>();
         Animator = GetComponentInChildren<Animator>();
 
         Movement.InitMovement(this);

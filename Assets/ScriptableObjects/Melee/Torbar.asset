@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3feeffb0b5353d4296cc11c429717e4, type: 3}
+  m_Name: Torbar
+  m_EditorClassIdentifier: 
+  Name: Torbar
+  Description: 
+  MaxHP: 0
+  MaxMP: 0
+  Armor: 0
+  MagicResistance: 0
+  AttackDamage: 0
+  AbilityPower: 0
+  AttackSpeed: 0
+  CriticalProbability: 0
+  CriticalDamage: 0
+  MoveSpeed: 0
+  Stamina: 0
+  IncreasedDamage: 0
+  Drain: 0
+  Range: 0

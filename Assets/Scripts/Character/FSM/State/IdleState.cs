@@ -9,14 +9,14 @@ public class IdleState : CharacterBaseState
     public override void Enter()
     {
         base.Enter();
-        stateMachine.CurrentState = ECharacterState.Idle;
+        stateMachine.CurrentCharacterState = ECharacterState.Idle;
         StopAnimation_Bool(stateMachine.Character.AnimationData.MoveParameterHash);
     }
 
     public override void Exit()
     {
         base.Exit();
-        stateMachine.CurrentState = ECharacterState.None;
+        stateMachine.CurrentCharacterState = ECharacterState.None;
     }
 
     public override void PhysicsUpdate()

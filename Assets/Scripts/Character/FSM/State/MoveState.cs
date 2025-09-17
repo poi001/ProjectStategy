@@ -9,14 +9,14 @@ public class MoveState : CharacterBaseState
     public override void Enter()
     {
         base.Enter();
-        stateMachine.CurrentState = ECharacterState.Move;
+        stateMachine.CurrentCharacterState = ECharacterState.Move;
         StartAnimation_Bool(stateMachine.Character.AnimationData.MoveParameterHash);
     }
 
     public override void Exit()
     {
         base.Exit();
-        stateMachine.CurrentState = ECharacterState.None;
+        stateMachine.CurrentCharacterState = ECharacterState.None;
         StopAnimation_Bool(stateMachine.Character.AnimationData.MoveParameterHash);
     }
 

@@ -10,21 +10,23 @@ public class CharacterMovement : MonoBehaviour
     private Character _character;
     private Vector2 _targetPos;
 
-     
+
     public void InitMovement(Character character)
     {
         _character = character;
 
-        StartCoroutine(FindToTarget_Coroutine(0.15f));
-        _character.StateMachine.ChanageState(_character.StateMachine.moveState);
+        CoroutineManager.Instance.StartManagedCoroutine(FindToTarget_Coroutine(0.15f), DefineClass.FindToTargetCoroutineKey);
+        //StartCoroutine(FindToTarget_Coroutine(0.15f));
+        //_character.StateMachine.ChanageState(_character.StateMachine.moveState);
     }
 
     private void Update()
     {
-        transform.position = Vector2.MoveTowards(_character.transform.position, _targetPos, Time.deltaTime);
+        if(_character.StateMachine.CurrentCharacterState == ECharacterState.Move)
+            transform.position = Vector2.MoveTowards(_character.transform.position, _targetPos, Time.deltaTime);
     }
 
-    IEnumerator FindToTarget_Coroutine(float deltaTime)
+    IEnumerator FindToTarget_Coroutine(float interval)
     {
         while (true)
         {
@@ -34,7 +36,7 @@ public class CharacterMovement : MonoBehaviour
                 if (character != null) _targetPos = character.transform.position;
             }
 
-            yield return new WaitForSeconds(deltaTime);
+            yield return YieldCache.WaitForSeconds(interval);
         }
     }
 }

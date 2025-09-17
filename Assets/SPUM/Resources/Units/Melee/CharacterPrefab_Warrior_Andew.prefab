@@ -2679,6 +2679,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5808651281842260406}
   - component: {fileID: 4021648796380670185}
+  - component: {fileID: 3765828790556669894}
   m_Layer: 5
   m_Name: CharacterPrefab_Warrior_Andew
   m_TagString: Untagged
@@ -5787,6 +5788,18 @@ MonoBehaviour:
   - {fileID: 7400000, guid: 4c70df3312bb83346a1bf065b30d3467, type: 2}
   - {fileID: 7400000, guid: 1ef525d53ae254f7d82ef364ced85490, type: 2}
   - {fileID: 7400000, guid: fabe4f140fdb9cb448bc941c7c93e8b6, type: 2}
+--- !u!114 &3765828790556669894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4821242761046364333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eb16df645ac0e749b8952cd974fdf8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4851027621343564488
 GameObject:
   m_ObjectHideFlags: 0

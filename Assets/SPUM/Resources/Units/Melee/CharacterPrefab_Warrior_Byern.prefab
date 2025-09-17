@@ -1391,7 +1391,7 @@ GameObject:
   - component: {fileID: 6454894587026802450}
   - component: {fileID: 5591304669507364371}
   m_Layer: 5
-  m_Name: CharacterPrefab_Warrior_Byern1
+  m_Name: CharacterPrefab_Warrior_Byern
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

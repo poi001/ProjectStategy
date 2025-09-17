@@ -9,7 +9,7 @@ public class DeathState : CharacterBaseState
     public override void Enter()
     {
         base.Enter();
-        stateMachine.CurrentState = ECharacterState.Death;
+        stateMachine.CurrentCharacterState = ECharacterState.Death;
         StartAnimation_Trigger(stateMachine.Character.AnimationData.DeathParameterHash);
         StartAnimation_Bool(stateMachine.Character.AnimationData.IsDeathParameterHash);
     }
@@ -17,7 +17,7 @@ public class DeathState : CharacterBaseState
     public override void Exit()
     {
         base.Exit();
-        stateMachine.CurrentState = ECharacterState.None;
+        stateMachine.CurrentCharacterState = ECharacterState.None;
         StopAnimation_Bool(stateMachine.Character.AnimationData.IsDeathParameterHash);
     }
 

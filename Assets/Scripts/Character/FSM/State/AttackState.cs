@@ -9,14 +9,14 @@ public class AttackState : CharacterBaseState
     public override void Enter()
     {
         base.Enter();
-        stateMachine.CurrentState = ECharacterState.Attack;
+        stateMachine.CurrentCharacterState = ECharacterState.Attack;
         StartAnimation_Trigger(stateMachine.Character.AnimationData.AttackParameterHash);
     }
 
     public override void Exit()
     {
         base.Exit();
-        stateMachine.CurrentState = ECharacterState.None;
+        stateMachine.CurrentCharacterState = ECharacterState.None;
     }
 
     public override void PhysicsUpdate()
