@@ -1,9 +1,10 @@
+using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    public CharacterMovement Movement { get; private set; }
+    //public CharacterMovement Movement { get; private set; }
     public Animator Animator { get; protected set; }
 
     public CharacterStateMachine StateMachine { get; private set; }
@@ -15,6 +16,8 @@ public class Character : MonoBehaviour
     public bool IsPlayerTeam { get; private set; } = true;
     //public EWeaponType CharacterType { get; private set; } = EWeaponType.None;
 
+    private float _attackTimer = 0.0f;
+
 
     private void Start()
     {
@@ -22,6 +25,15 @@ public class Character : MonoBehaviour
 
         if (transform.position.x < 0.0f) IsPlayerTeam = true;
         else IsPlayerTeam = false;
+
+        StateMachine.ChanageState(StateMachine.moveState);
+    }
+
+    private void Update()
+    {
+        if(StateMachine != null && StateMachine.currentState != null) StateMachine.Update();
+
+        if (_attackTimer > 0.0f) _attackTimer -= Time.deltaTime;
     }
 
     public void InitCharacter()
@@ -30,10 +42,22 @@ public class Character : MonoBehaviour
         StateMachine = new CharacterStateMachine(this);
         AnimationData = new CharacterAnimationData();
 
-        Movement = GetComponent<CharacterMovement>();
-        if (Movement == null) Movement = gameObject.AddComponent<CharacterMovement>();
+        //Movement = GetComponent<CharacterMovement>();
+        //if (Movement == null) Movement = gameObject.AddComponent<CharacterMovement>();
         Animator = GetComponentInChildren<Animator>();
 
-        Movement.InitMovement(this);
+        //Movement.InitMovement(this);
+    }
+
+    public bool Attack()
+    {
+        if (_attackTimer <= 0.0f)
+        {
+            float attackSpeed = Stats.AttackSpeed <= 0.01f ? 0.01f : Stats.AttackSpeed;
+            _attackTimer = 1.0f / Stats.AttackSpeed;
+            return true;
+        }
+
+        return false;
     }
 }

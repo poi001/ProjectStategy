@@ -1,6 +1,8 @@
 
 public class AttackState : CharacterBaseState
 {
+
+
     public AttackState(CharacterStateMachine characterStateMachine) : base(characterStateMachine)
     {
 
@@ -9,6 +11,9 @@ public class AttackState : CharacterBaseState
     public override void Enter()
     {
         base.Enter();
+
+        if (!stateMachine.Character.Attack()) stateMachine.ChanageState(stateMachine.idleState);
+
         stateMachine.CurrentCharacterState = ECharacterState.Attack;
         StartAnimation_Trigger(stateMachine.Character.AnimationData.AttackParameterHash);
     }
@@ -28,4 +33,6 @@ public class AttackState : CharacterBaseState
     {
         base.Update();
     }
+
+
 }

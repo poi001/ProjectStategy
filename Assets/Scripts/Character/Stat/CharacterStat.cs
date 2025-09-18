@@ -38,6 +38,8 @@ public class CharacterStat
     public float CurrentHP { get; private set; }
     public float CurrentMP { get; private set; }
 
+
+
     // ETC Stats
     //public float Condition = 100.0f;
     //public float Satisfaction = 100.0f;
@@ -48,28 +50,22 @@ public class CharacterStat
 
     public CharacterStat(CharacterStatScriptableObject so)
     {
-        SetupStat(_maxHP, so.MaxHP, ECharacterStatType.MaxHP);
-        SetupStat(_maxMP, so.MaxHP, ECharacterStatType.MaxHP);
-        SetupStat(_armor, so.MaxHP, ECharacterStatType.MaxHP);
-        SetupStat(_magicResistance, so.MaxHP, ECharacterStatType.MaxHP);
-        SetupStat(_attackDamage, so.MaxHP, ECharacterStatType.MaxHP);
-        SetupStat(_abilityPower, so.MaxHP, ECharacterStatType.MaxHP);
-        SetupStat(_attackSpeed, so.MaxHP, ECharacterStatType.MaxHP);
-        SetupStat(_criticalProbability, so.MaxHP, ECharacterStatType.MaxHP);
-        SetupStat(_criticalDamage, so.MaxHP, ECharacterStatType.MaxHP);
-        SetupStat(_moveSpeed, so.MaxHP, ECharacterStatType.MaxHP);
-        SetupStat(_stamina, so.MaxHP, ECharacterStatType.MaxHP);
-        SetupStat(_increasedDamage, so.MaxHP, ECharacterStatType.MaxHP);
-        SetupStat(_drain, so.MaxHP, ECharacterStatType.MaxHP);
-        SetupStat(_range, so.MaxHP, ECharacterStatType.MaxHP);
+        _statDict.Add(ECharacterStatType.MaxHP, _maxHP = new Stat(so.MaxHP));
+        _statDict.Add(ECharacterStatType.MaxMP, _maxMP = new Stat(so.MaxMP));
+        _statDict.Add(ECharacterStatType.Armor, _armor = new Stat(so.Armor));
+        _statDict.Add(ECharacterStatType.MagicResistance, _magicResistance = new Stat(so.MagicResistance));
+        _statDict.Add(ECharacterStatType.AttackDamage, _attackDamage = new Stat(so.AttackDamage));
+        _statDict.Add(ECharacterStatType.AbilityPower, _abilityPower = new Stat(so.AbilityPower));
+        _statDict.Add(ECharacterStatType.AttackSpeed, _attackSpeed = new Stat(so.AttackSpeed));
+        _statDict.Add(ECharacterStatType.CriticalProbability, _criticalProbability = new Stat(so.CriticalProbability));
+        _statDict.Add(ECharacterStatType.CriticalDamage, _criticalDamage = new Stat(so.CriticalDamage));
+        _statDict.Add(ECharacterStatType.MoveSpeed, _moveSpeed = new Stat(so.MoveSpeed));
+        _statDict.Add(ECharacterStatType.Stamina, _stamina = new Stat(so.Stamina));
+        _statDict.Add(ECharacterStatType.IncreasedDamage, _increasedDamage = new Stat(so.IncreasedDamage));
+        _statDict.Add(ECharacterStatType.Drain, _drain = new Stat(so.Drain));
+        _statDict.Add(ECharacterStatType.Range, _range = new Stat(so.Range));
 
         CurrentHP = MaxHP;
         CurrentMP = MaxMP;
-    }
-
-    private void SetupStat(Stat stat, float value, ECharacterStatType statType)
-    {
-        stat = new Stat(value);
-        _statDict.Add(statType, stat);
     }
 }

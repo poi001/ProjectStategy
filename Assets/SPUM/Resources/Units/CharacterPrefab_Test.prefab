@@ -1113,6 +1113,7 @@ GameObject:
   - component: {fileID: 5057898806077838812}
   - component: {fileID: 8976595495154994714}
   - component: {fileID: 4164093004986969302}
+  - component: {fileID: 7393576454922310339}
   m_Layer: 0
   m_Name: UnitRoot
   m_TagString: Untagged
@@ -1170,6 +1171,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7393576454922310339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3007120138291628186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90d1965fa81dc5f40988fd0dc9641508, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3233158460577285260
 GameObject:
   m_ObjectHideFlags: 0
@@ -3500,7 +3513,6 @@ GameObject:
   - component: {fileID: 4931111350298221636}
   - component: {fileID: 252849346569725172}
   - component: {fileID: 2082622489026233613}
-  - component: {fileID: 710980270059557779}
   m_Layer: 5
   m_Name: CharacterPrefab_Test
   m_TagString: Untagged
@@ -3515,7 +3527,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7205708398379074025}
-  m_LocalRotation: {x: -0, y: 0.008726557, z: -0, w: 0.9999619}
+  m_LocalRotation: {x: 0, y: 0.008726558, z: 0, w: 0.999962}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6571,18 +6583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eb16df645ac0e749b8952cd974fdf8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &710980270059557779
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7205708398379074025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 187a30a6af8a19545be069a38462f593, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  statSO: {fileID: 11400000, guid: be2316efa48fcbf4c806743b72fe1d39, type: 2}
 --- !u!1 &7454519523744372118
 GameObject:
   m_ObjectHideFlags: 0

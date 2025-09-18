@@ -23,7 +23,7 @@ MonoBehaviour:
   AttackSpeed: 0.9
   CriticalProbability: 0
   CriticalDamage: 0
-  MoveSpeed: 4
+  MoveSpeed: 0.8
   Stamina: 100
   IncreasedDamage: 0
   Drain: 0

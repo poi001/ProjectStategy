@@ -28,6 +28,7 @@ public class CharacterBaseState : IState
 
     }
 
+    // 局聪皋捞记 包府
     protected void StartAnimation_Bool(int animationHash)
     {
         stateMachine.Character.Animator.SetBool(animationHash, true);

@@ -1,12 +1,15 @@
+using System.Linq;
 using UnityEngine;
 
 public class BattleManager : SingletonWithScene<BattleManager>
 {
+    // 인스펙터에 넣은 프리팹 ( 임의 )
     [SerializeField]
     private GameObject[] _blueCharacters = new GameObject[DefineClass.NumberOfPlayers];
     [SerializeField]
     private GameObject[] _redCharacters = new GameObject[DefineClass.NumberOfPlayers];
 
+    // 소환된 캐릭터
     private GameObject[] _blueCharacters2 = new GameObject[DefineClass.NumberOfPlayers];
     private GameObject[] _redCharacters2 = new GameObject[DefineClass.NumberOfPlayers];
 
@@ -56,9 +59,24 @@ public class BattleManager : SingletonWithScene<BattleManager>
         return CopareNearestDistance(isBlueTeam, true, pos);
     }
 
-    private Character GetNearAllyCharacter(bool isBlueTeam, Vector2 pos)
+    public Character GetNearAllyCharacter(bool isBlueTeam, Vector2 pos)
     {
         return CopareNearestDistance(isBlueTeam, false, pos);
+    }
+
+    public bool GetActiveEnemy(bool isBlueTeam)
+    {
+        return GetActiveCharacter(isBlueTeam, false, true);
+    }
+
+    public bool GetActiveAlly(bool isBlueTeam, Vector2 pos)
+    {
+        return GetActiveCharacter(isBlueTeam, false, false);
+    }
+
+    public bool GetActiveCharacter(bool isBlueTeam, Vector2 pos)
+    {
+        return GetActiveCharacter(isBlueTeam, true);
     }
 
     private Character CopareNearestDistance(bool isBlueTeam, bool isFindObjectIsEnemy, Vector2 pos)
@@ -90,6 +108,34 @@ public class BattleManager : SingletonWithScene<BattleManager>
         }
 
         return nearestCharacter;
+    }
+
+    private bool GetActiveCharacter(bool isBlueTeam, bool isFindingObjectIsCharacter, bool isFindingObjectIsEnemy = true)
+    {
+        GameObject[] characterObjects = new GameObject[DefineClass.NumberOfPlayers];
+
+        if (isFindingObjectIsCharacter)
+        {
+            characterObjects = _blueCharacters2.Concat(_redCharacters2).ToArray();
+        }
+        else
+        {
+            if (isFindingObjectIsEnemy)
+            {
+                if (isBlueTeam) characterObjects = _redCharacters2;
+                else characterObjects = _blueCharacters2;
+            }
+            else
+            {
+                if (isBlueTeam) characterObjects = _blueCharacters2;
+                else characterObjects = _redCharacters2;
+            }
+        }
+
+        foreach(var obj in characterObjects) 
+            if (obj != null) return true;
+
+        return false;
     }
 
     //private void OnEnable()

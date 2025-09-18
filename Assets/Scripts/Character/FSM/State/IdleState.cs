@@ -1,6 +1,9 @@
 
+
 public class IdleState : CharacterBaseState
 {
+
+
     public IdleState(CharacterStateMachine characterStateMachine) : base(characterStateMachine)
     {
 
@@ -27,5 +30,19 @@ public class IdleState : CharacterBaseState
     public override void Update()
     {
         base.Update();
+
+        // 제일 가까운 적을 찾음
+        GetCharacter();
+    }
+
+    private void GetCharacter()
+    {
+        if (BattleManager.Instance != null)
+        {
+            if (BattleManager.Instance.GetActiveEnemy(stateMachine.Character.IsPlayerTeam))
+            {
+                stateMachine.ChanageState(stateMachine.moveState);
+            }
+        }
     }
 }
