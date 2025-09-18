@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    //public CharacterMovement Movement { get; private set; }
     public Animator Animator { get; protected set; }
 
     public CharacterStateMachine StateMachine { get; private set; }
@@ -42,11 +41,7 @@ public class Character : MonoBehaviour
         StateMachine = new CharacterStateMachine(this);
         AnimationData = new CharacterAnimationData();
 
-        //Movement = GetComponent<CharacterMovement>();
-        //if (Movement == null) Movement = gameObject.AddComponent<CharacterMovement>();
         Animator = GetComponentInChildren<Animator>();
-
-        //Movement.InitMovement(this);
     }
 
     public bool Attack()
