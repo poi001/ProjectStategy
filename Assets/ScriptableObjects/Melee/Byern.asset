@@ -18,13 +18,13 @@ MonoBehaviour:
   MaxMP: 60
   Armor: 45
   MagicResistance: 25
-  AttackDamage: 125
+  AttackDamage: 65
   AbilityPower: 0
   AttackSpeed: 1.25
   CriticalProbability: 5
   CriticalDamage: 5
-  MoveSpeed: 6
+  MoveSpeed: 1
   Stamina: 100
   IncreasedDamage: 0
   Drain: 0
-  Range: 0
+  Range: 1

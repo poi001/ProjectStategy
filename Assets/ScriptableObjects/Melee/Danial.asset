@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Danial
   Description: 
-  MaxHP: 0
-  MaxMP: 0
-  Armor: 0
-  MagicResistance: 0
-  AttackDamage: 0
+  MaxHP: 1000
+  MaxMP: 150
+  Armor: 120
+  MagicResistance: 75
+  AttackDamage: 60
   AbilityPower: 0
-  AttackSpeed: 0
+  AttackSpeed: 0.6
   CriticalProbability: 0
   CriticalDamage: 0
-  MoveSpeed: 0
-  Stamina: 0
+  MoveSpeed: 0.6
+  Stamina: 100
   IncreasedDamage: 0
   Drain: 0
-  Range: 0
+  Range: 1

@@ -6584,6 +6584,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statSO: {fileID: 11400000, guid: 04731482837a2fa488d2c93b2b0651f0, type: 2}
+  _characterType: 2
+  _weaponType: 1
 --- !u!1 &7454519523744372118
 GameObject:
   m_ObjectHideFlags: 0

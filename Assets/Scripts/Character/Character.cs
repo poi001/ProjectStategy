@@ -1,27 +1,37 @@
-using Unity.VisualScripting;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class Character : MonoBehaviour
 {
     public Animator Animator { get; protected set; }
+    public CharacterMovement Movement { get; protected set; }
 
     public CharacterStateMachine StateMachine { get; private set; }
     public CharacterAnimationData AnimationData { get; protected set; }
     public CharacterStat Stats { get; protected set; }
+    public CharacterAttackTimer AttackTimer { get; protected set; }
 
     [SerializeField]
     private CharacterStatScriptableObject statSO;
-    public bool IsPlayerTeam { get; private set; } = true;
-    //public EWeaponType CharacterType { get; private set; } = EWeaponType.None;
+    [SerializeField]
+    private ECharacterType _characterType = ECharacterType.Melee;
+    [SerializeField]
+    private EWeaponType _weaponType = EWeaponType.Normal;
 
-    private float _attackTimer = 0.0f;
+    public ECharacterType CharacterType { get; private set; } = ECharacterType.None;
+    public EWeaponType WeaponType { get; private set; } = EWeaponType.None;
+    public bool IsPlayerTeam { get; private set; } = true;
+
+    public Character Target { get; private set; }
+    public Vector2 _dir = Vector2.zero;
+    public bool _isFacingLeft = true;
 
 
     private void Start()
     {
         InitCharacter();
 
+        // temp
         if (transform.position.x < 0.0f) IsPlayerTeam = true;
         else IsPlayerTeam = false;
 
@@ -30,29 +40,52 @@ public class Character : MonoBehaviour
 
     private void Update()
     {
+        // temp Target
+        Target = BattleManager.Instance.GetNearEnemy(IsPlayerTeam, transform.position);
+
+        // 스테이트 머신의 Update
         if(StateMachine != null && StateMachine.currentState != null) StateMachine.Update();
 
-        if (_attackTimer > 0.0f) _attackTimer -= Time.deltaTime;
+        // 공격 타이머
+        AttackTimer.UpdateAttackTimer();
     }
 
     public void InitCharacter()
     {
+        CharacterType = _characterType;
+        WeaponType = _weaponType;
+
         Stats = new CharacterStat(statSO);
         StateMachine = new CharacterStateMachine(this);
         AnimationData = new CharacterAnimationData();
+        AttackTimer = new CharacterAttackTimer(this);
+        SelectMovement(_characterType);
 
         Animator = GetComponentInChildren<Animator>();
     }
 
-    public bool Attack()
+    private void SelectMovement(ECharacterType characterType)
     {
-        if (_attackTimer <= 0.0f)
+        switch (characterType)
         {
-            float attackSpeed = Stats.AttackSpeed <= 0.01f ? 0.01f : Stats.AttackSpeed;
-            _attackTimer = 1.0f / Stats.AttackSpeed;
-            return true;
+            case ECharacterType.Melee:
+                Movement = new MeleeMovement(this);
+                break;
+            case ECharacterType.Ranged:
+            case ECharacterType.Magician:
+                Movement = new RangedMovement(this);
+                break;
+            default:
+                break;
         }
+    }
 
-        return false;
+    public void Flip()
+    {
+        _isFacingLeft = !_isFacingLeft;
+
+        Vector3 localScale = transform.localScale; // 현재 스케일의 x 값 반전
+        localScale.x *= -1.0f; // 좌우 반전
+        transform.localScale = localScale;
     }
 }

@@ -18,7 +18,7 @@ MonoBehaviour:
   MaxMP: 100
   Armor: 100
   MagicResistance: 15
-  AttackDamage: 100
+  AttackDamage: 50
   AbilityPower: 0
   AttackSpeed: 0.9
   CriticalProbability: 0

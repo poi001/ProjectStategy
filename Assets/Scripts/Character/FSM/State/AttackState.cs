@@ -1,7 +1,8 @@
+using UnityEngine;
+
 
 public class AttackState : CharacterBaseState
 {
-
 
     public AttackState(CharacterStateMachine characterStateMachine) : base(characterStateMachine)
     {
@@ -12,10 +13,10 @@ public class AttackState : CharacterBaseState
     {
         base.Enter();
 
-        if (!stateMachine.Character.Attack()) stateMachine.ChanageState(stateMachine.idleState);
-
         stateMachine.CurrentCharacterState = ECharacterState.Attack;
         StartAnimation_Trigger(stateMachine.Character.AnimationData.AttackParameterHash);
+
+        FlipCharacter();
     }
 
     public override void Exit()
@@ -34,5 +35,19 @@ public class AttackState : CharacterBaseState
         base.Update();
     }
 
-
+    private void FlipCharacter()
+    {
+        // 플레이어가 적보다 오른쪽에 있을 때 반전
+        if (stateMachine.Character.transform.position.x > stateMachine.Character.Target.transform.position.x &&
+            !stateMachine.Character._isFacingLeft)
+        {
+            stateMachine.Character.Flip(); // 스케일을 반전
+        }
+        // 플레이어가 적보다 왼쪽에 있을 때 반전
+        else if (stateMachine.Character.transform.position.x < stateMachine.Character.Target.transform.position.x &&
+            stateMachine.Character._isFacingLeft)
+        {
+            stateMachine.Character.Flip(); // 스케일을 반전
+        }
+    }
 }

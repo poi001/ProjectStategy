@@ -45,7 +45,8 @@ public enum ECharacterType
     None = 0,
     Melee,
     Ranged,
-    Magician
+    Magician,
+    Healer
 }
 public enum EWeaponType
 {
