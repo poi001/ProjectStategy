@@ -156,7 +156,7 @@ public class Character : MonoBehaviour
     private void Death()
     {
         StateMachine.ChanageState(StateMachine.deathState);
-        gameObject.tag = gameObject.tag == DefineClass.Tag_Player ? DefineClass.Tag_DeadPlayer : DefineClass.Tag_DeadEnemy;
+        gameObject.tag = gameObject.CompareTag(DefineClass.Tag_Player) ? DefineClass.Tag_DeadPlayer : DefineClass.Tag_DeadEnemy;
     }
 
     public void Revival()

@@ -42,7 +42,12 @@ public class MoveState : CharacterBaseState
                 }
             }
         }
-
+        else
+        {
+            stateMachine.ChanageState(stateMachine.idleState);
+            return;
+        }
+        
         stateMachine.Character.Movement.UpdateMovement();
     }
 }

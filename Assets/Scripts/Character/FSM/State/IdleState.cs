@@ -39,7 +39,7 @@ public class IdleState : CharacterBaseState
     {
         if (BattleManager.Instance != null)
         {
-            if (BattleManager.Instance.GetActiveEnemy(stateMachine.Character.IsPlayerTeam))
+            if (BattleManager.Instance.GetActiveEnemy(stateMachine.Character.IsPlayerTeam) && stateMachine.Character.Target != null)
             {
                 stateMachine.ChanageState(stateMachine.moveState);
             }

@@ -113,6 +113,9 @@ public class BattleManager : SingletonWithScene<BattleManager>
 
         foreach (var obj in characterObjects)
         {
+            if (obj.GetComponent<Character>().StateMachine.CurrentCharacterState == ECharacterState.Death)
+                continue;
+
             distance = Vector2.Distance(pos, obj.transform.position);
             if (nearestDistance > distance)
             {

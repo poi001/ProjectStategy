@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class MeleeAttackAction : CharacterAttackAction
 {
@@ -11,6 +12,14 @@ public class MeleeAttackAction : CharacterAttackAction
     {
         base.Attack();
 
-        _character.Target.Stats.StatHandler.TakeDamaged(_character.Stats.AttackDamage);
+        Character target = _character.Target;
+
+        if (target != null)
+        {
+            if (!(target.CompareTag(DefineClass.Tag_DeadPlayer) || target.CompareTag(DefineClass.Tag_DeadEnemy)))
+            {
+                _character.Target.Stats.StatHandler.TakeDamaged(_character.Stats.AttackDamage);
+            }
+        }
     }
 }

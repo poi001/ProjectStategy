@@ -3,6 +3,7 @@ using UnityEngine;
 
 public abstract class AttackObject : MonoBehaviour
 {
+    protected SpriteRenderer sprite;
     public Character Owner { get; private set; }
     public float Damage { get; private set; }
     public float Speed;
@@ -42,6 +43,8 @@ public abstract class AttackObject : MonoBehaviour
             enemyTag = DefineClass.Tag_Player;
             allyTag = DefineClass.Tag_Enemy;
         }
+
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     public abstract void UpdateObject();
