@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 //fileName : 생성되는 에셋의 이름
@@ -11,6 +9,10 @@ public class CharacterStatScriptableObject : ScriptableObject
     [Header("Info")]
     public string Name;
     public string Description;
+
+    [Header("CharacterSetting")]
+    public ECharacterType CharacterType;
+    public EWeaponType WeaponType;
 
     [Header("Battle Stats")]
     public float MaxHP;
@@ -27,4 +29,9 @@ public class CharacterStatScriptableObject : ScriptableObject
     public float IncreasedDamage;
     public float Drain;
     public float Range;
+
+    [Header("ETC Objects")]
+    public GameObject NormalAttackObject;
+    public GameObject SkillObject;
+    public GameObject UltimateObject;
 }

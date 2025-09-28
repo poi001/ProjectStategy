@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class AnimationEvents : MonoBehaviour
 {
@@ -9,9 +10,9 @@ public class AnimationEvents : MonoBehaviour
         _character = GetComponentInParent<Character>();
     }
 
-    public void TakeDamage()
+    public void Attack()
     {
-
+        _character.AttackAction.Attack();
     }
 
     public void AttackEnd()

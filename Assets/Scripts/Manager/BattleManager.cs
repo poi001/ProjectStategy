@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -13,6 +14,11 @@ public class BattleManager : SingletonWithScene<BattleManager>
     private GameObject[] _blueCharacters2 = new GameObject[DefineClass.NumberOfPlayers];
     private GameObject[] _redCharacters2 = new GameObject[DefineClass.NumberOfPlayers];
 
+    // temp
+    private List<Character> _characters = new();
+    [SerializeField]
+    private GameObject _uiManager;
+
     private float _posX = -2.5f;
     private float _posY = 0.5f;
     private float[] _posXRate = { 0.0f, 0.0f, 2.5f, 0.0f, 0.0f };
@@ -22,6 +28,8 @@ public class BattleManager : SingletonWithScene<BattleManager>
     {
         SpawnBlueTeam();
         SpawnRedTeam();
+
+        Instantiate(_uiManager).GetComponent<UIManager>().Init(_characters);
     }
 
     private void SpawnBlueTeam()
@@ -32,6 +40,9 @@ public class BattleManager : SingletonWithScene<BattleManager>
             _posY += _posYRate[i];
             Vector2 pos = new Vector2(_posX, _posY);
             _blueCharacters2[i] = Instantiate(_blueCharacters[i], pos, Quaternion.identity);
+
+            // temp
+            _characters.Add(_blueCharacters2[i].GetComponent<Character>());
         }
 
         _posX = -2.5f;
@@ -48,6 +59,9 @@ public class BattleManager : SingletonWithScene<BattleManager>
             _posY += _posYRate[i];
             Vector2 pos = new Vector2(_posX, _posY);
             _redCharacters2[i] = Instantiate(_redCharacters[i], pos, Quaternion.identity);
+
+            // temp
+            _characters.Add(_redCharacters2[i].GetComponent<Character>());
         }
 
         _posX = -2.5f;

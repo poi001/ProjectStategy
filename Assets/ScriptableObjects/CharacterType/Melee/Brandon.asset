@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Brandon
   Description: 
+  CharacterType: 2
+  WeaponType: 1
   MaxHP: 950
   MaxMP: 95
   Armor: 75
@@ -28,3 +30,6 @@ MonoBehaviour:
   IncreasedDamage: 0
   Drain: 0
   Range: 3
+  NormalAttackObject: {fileID: 6410446256651421753, guid: ef303e3b185d80c4186dbb90afadaf4c, type: 3}
+  SkillObject: {fileID: 0}
+  UltimateObject: {fileID: 0}

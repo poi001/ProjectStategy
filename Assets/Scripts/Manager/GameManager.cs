@@ -9,7 +9,6 @@ public class GameManager : SingletonWithMono<GameManager>
 
     private void Start()
     {
-        //ChangeGameState(EGameState.Title);
         ChangeGameState(EGameState.Battle);
     }
 

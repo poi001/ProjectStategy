@@ -8,8 +8,7 @@ public static class EventBus
 {
     private static readonly Dictionary<EGameState, UnityEvent> Events = new();
 
-
-    //이벤트 등록
+    // 이벤트 등록
     public static void Register(EGameState gameState, UnityAction action)
     {
         if (!Events.ContainsKey(gameState))
@@ -18,7 +17,7 @@ public static class EventBus
         Events[gameState].AddListener(action);
     }
 
-    //이벤트 해제
+    // 이벤트 해제
     public static void Unregister(EGameState gameState, UnityAction action)
     {
         if (Events.TryGetValue(gameState, out UnityEvent @event))
@@ -27,7 +26,7 @@ public static class EventBus
         }
     }
 
-    //이벤트 실행
+    // 이벤트 실행
     public static void Publish(EGameState gameState)
     {
         if (Events.TryGetValue(gameState, out UnityEvent @event))

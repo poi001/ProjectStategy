@@ -58,6 +58,13 @@ public enum EWeaponType
     Bow,
     Staff
 }
+public enum EAttackObject
+{
+    Normal = 0,
+    Skill,
+    Ult
+}
+
 
 public class DefineClass
 {
@@ -76,4 +83,21 @@ public class DefineClass
 
     // 코루틴 키 값
     public const string FindToTargetCoroutineKey = "FindToTarget";
+
+    // 레이어
+    public const string Layer_Ignore = "Ignore Raycast";
+    public const string Layer_Player = "Player";
+    public const string Layer_Enemy = "Enemy";
+    public const string Layer_Skill = "Skill";
+    public const string Layer_PlayerSkill = "PlayerSkill";
+    public const string Layer_EnemySkill = "EnemySkill";
+
+    // 태그
+    public const string Tag_Player = "Player";
+    public const string Tag_Enemy = "Enemy";
+    public const string Tag_Skill = "Skill";
+    public const string Tag_PlayerSkill = "PlayerSkill";
+    public const string Tag_EnemySkill = "EnemySkill";
+    public const string Tag_DeadPlayer = "DeadPlayer";
+    public const string Tag_DeadEnemy = "DeadEnemy";
 }

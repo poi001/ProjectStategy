@@ -5,6 +5,12 @@ using UnityEngine.TextCore.Text;
 
 public class CharacterStat
 {
+    // Character
+    private Character _character;
+
+    // StatHandler
+    public StatHandler StatHandler { get; private set; }
+
     // Battle Stats
     private Stat _maxHP;
     private Stat _maxMP;
@@ -35,8 +41,6 @@ public class CharacterStat
     public float IncreasedDamage => _increasedDamage.FinalValue;
     public float Drain => _drain.FinalValue;
     public float Range => _range.FinalValue;
-    public float CurrentHP { get; private set; }
-    public float CurrentMP { get; private set; }
 
 
 
@@ -48,8 +52,10 @@ public class CharacterStat
     public Dictionary<ECharacterStatType, Stat> _statDict { get; private set; } = new();
 
 
-    public CharacterStat(CharacterStatScriptableObject so)
+    public CharacterStat(Character character, CharacterStatScriptableObject so)
     {
+        _character = character;
+
         _statDict.Add(ECharacterStatType.MaxHP, _maxHP = new Stat(so.MaxHP));
         _statDict.Add(ECharacterStatType.MaxMP, _maxMP = new Stat(so.MaxMP));
         _statDict.Add(ECharacterStatType.Armor, _armor = new Stat(so.Armor));
@@ -65,7 +71,6 @@ public class CharacterStat
         _statDict.Add(ECharacterStatType.Drain, _drain = new Stat(so.Drain));
         _statDict.Add(ECharacterStatType.Range, _range = new Stat(so.Range));
 
-        CurrentHP = MaxHP;
-        CurrentMP = MaxMP;
+        this.StatHandler = new StatHandler(character, this);
     }
 }

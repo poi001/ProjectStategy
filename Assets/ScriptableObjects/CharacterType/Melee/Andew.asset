@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Andew
   Description: 
+  CharacterType: 1
+  WeaponType: 2
   MaxHP: 850
   MaxMP: 100
   Armor: 100
@@ -28,3 +30,6 @@ MonoBehaviour:
   IncreasedDamage: 0
   Drain: 0
   Range: 1
+  NormalAttackObject: {fileID: 0}
+  SkillObject: {fileID: 0}
+  UltimateObject: {fileID: 0}

@@ -56,3 +56,4 @@ MonoBehaviour:
   - {fileID: 7205708398379074025, guid: 8d07ddd4c4b58c2469675d0a4dc0a942, type: 3}
   - {fileID: 7205708398379074025, guid: 8d07ddd4c4b58c2469675d0a4dc0a942, type: 3}
   - {fileID: 7205708398379074025, guid: 8d07ddd4c4b58c2469675d0a4dc0a942, type: 3}
+  _uiManager: {fileID: 60240761876790415, guid: f8b77f0b0269e5e498e710384054c5df, type: 3}
