@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 
 public class Projectile : AttackObject
@@ -21,12 +22,17 @@ public class Projectile : AttackObject
         base.Init(owner, speed);
 
         _targetPosNormalized = (Owner.Target.transform.position - Owner.transform.position).normalized;
-
-        if (_targetPosNormalized.x < 0.0f) sprite.flipX = true;
+        SettingRotation(_targetPosNormalized);
     }
 
     public override void UpdateObject()
     {
         transform.position += _targetPosNormalized * Time.deltaTime * Speed;
+    }
+
+    private void SettingRotation(Vector3 pos)
+    {
+        float angle = Mathf.Atan2(pos.y, pos.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 }
