@@ -6,6 +6,12 @@ public class CharacterBaseState : IState
     public CharacterBaseState(CharacterStateMachine stateMachine)
     {
         this.stateMachine = stateMachine;
+
+        ECharacterType characterType = stateMachine.Character.CharacterType;
+        EWeaponType weaponType = stateMachine.Character.WeaponType;
+
+        ChangeFloatType(stateMachine.Character.AnimationData.MeleeTypeParameterHash, (int)weaponType);
+        ChangeFloatType(stateMachine.Character.AnimationData.WeaponTypeParameterHash, (int)characterType);
     }
 
     public virtual void Enter()

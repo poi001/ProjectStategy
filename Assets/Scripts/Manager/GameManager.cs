@@ -4,11 +4,26 @@ using UnityEngine;
 
 public class GameManager : SingletonWithMono<GameManager>
 {
+    // 매니저 오브젝트 ( 직렬화 )
+    [SerializeField]
+    private GameObject _battleManagerObject;
+
+    // 매니저 스크립트
+    private BattleManager _battleManager;
+
+    // 기타
     private EGameState _state;
 
 
     private void Start()
     {
+        Init();
+    }
+
+    private void Init()
+    {
+
+
         ChangeGameState(EGameState.Battle);
     }
 

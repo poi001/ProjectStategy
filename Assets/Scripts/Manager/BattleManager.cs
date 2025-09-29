@@ -24,12 +24,18 @@ public class BattleManager : SingletonWithScene<BattleManager>
     private float[] _posXRate = { 0.0f, 0.0f, 2.5f, 0.0f, 0.0f };
     private float[] _posYRate = { 0.0f, -1.0f, 1.5f, -1.0f, -1.0f };
 
+
     private void Start()
+    {
+        Init();
+    }
+
+    public void Init()
     {
         SpawnBlueTeam();
         SpawnRedTeam();
 
-        Instantiate(_uiManager).GetComponent<UIManager>().Init(_characters);
+        //Instantiate(_uiManager).GetComponent<UIManager>().Init(_characters);
     }
 
     private void SpawnBlueTeam()

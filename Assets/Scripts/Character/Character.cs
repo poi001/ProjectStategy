@@ -1,7 +1,5 @@
 using System;
-using UnityEditor.Timeline.Actions;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 public class Character : MonoBehaviour
 {
@@ -18,7 +16,8 @@ public class Character : MonoBehaviour
 
     // 직렬화
     [SerializeField]
-    private CharacterStatScriptableObject statSO;
+    private CharacterStatScriptableObject _statSO;
+    public Transform MuzzleTransform;
 
     // 캐릭터의 상세 정보
     public ECharacterType CharacterType { get; private set; } = ECharacterType.None;
@@ -31,8 +30,9 @@ public class Character : MonoBehaviour
     public GameObject UltimateObject { get; private set; }
 
     // 기타
-    public Character Target { get; private set; }
+    [HideInInspector]
     public Vector2 _dir = Vector2.zero;
+    public Character Target { get; private set; }
     public bool _isFacingLeft = true;
 
     // 델리게이트
@@ -47,14 +47,9 @@ public class Character : MonoBehaviour
         OnDamaged = null;
     }
 
-    // temp
-    private void Awake()
-    {
-        InitCharacter();
-    }
     private void Start()
     {
-        StateMachine.ChanageState(StateMachine.moveState);
+        InitCharacter();
     }
 
     private void Update()
@@ -64,7 +59,7 @@ public class Character : MonoBehaviour
             Target = BattleManager.Instance.GetNearEnemy(IsPlayerTeam, transform.position);
 
         // 스테이트 머신의 Update
-        if(StateMachine != null && StateMachine.currentState != null) StateMachine.Update();
+        if (StateMachine != null && StateMachine.currentState != null) StateMachine.Update();
 
         // 공격 타이머
         if (AttackTimer != null) AttackTimer.UpdateAttackTimer();
@@ -72,24 +67,24 @@ public class Character : MonoBehaviour
 
     public void InitCharacter()
     {
-        // 타입
-        CharacterType = statSO.CharacterType;
-        WeaponType = statSO.WeaponType;
-
-        // 오브젝트
-        NormalAttackObject = statSO.NormalAttackObject;
-        SkillObject = statSO.SkillObject;
-        UltimateObject = statSO.UltimateObject;
-
-        // 클래스
-        Stats = new CharacterStat(this, statSO);
-        StateMachine = new CharacterStateMachine(this);
-        AnimationData = new CharacterAnimationData();
-        AttackTimer = new CharacterAttackTimer(this);
-        SettingCharacterType(CharacterType);
-
         // 컴포넌트
         Animator = GetComponentInChildren<Animator>();
+
+        // 타입
+        CharacterType = _statSO.CharacterType;
+        WeaponType = _statSO.WeaponType;
+
+        // 오브젝트
+        NormalAttackObject = _statSO.NormalAttackObject;
+        SkillObject = _statSO.SkillObject;
+        UltimateObject = _statSO.UltimateObject;
+
+        // 클래스
+        Stats = new CharacterStat(this, _statSO);
+        AnimationData = new CharacterAnimationData();
+        StateMachine = new CharacterStateMachine(this);
+        AttackTimer = new CharacterAttackTimer(this);
+        SettingCharacterType(CharacterType);
 
         // 레이어, 태그 설정
         if (transform.position.x < 0.0f) IsPlayerTeam = true; // temp
@@ -107,6 +102,9 @@ public class Character : MonoBehaviour
 
         // 델리게이트
         OnDeath += Death;
+
+        // 처음 상태 설정
+        StateMachine.ChanageState(StateMachine.moveState);
     }
 
     private void SettingCharacterType(ECharacterType characterType)
@@ -136,12 +134,12 @@ public class Character : MonoBehaviour
         transform.localScale = localScale;
     }
 
-    public void SpawnAttackObject(EAttackObject attackObject)
+    public void SpawnAttackObject(EAttackObject attackObject, Vector3 pos)
     {
         switch (attackObject)
         {
             case EAttackObject.Normal:
-                Instantiate(NormalAttackObject, transform.position, Quaternion.identity).
+                Instantiate(NormalAttackObject, pos, Quaternion.identity).
                     GetComponent<AttackObject>().Init(this);
                 break;
             case EAttackObject.Skill:

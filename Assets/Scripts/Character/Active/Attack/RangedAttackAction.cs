@@ -1,4 +1,4 @@
-using UnityEngine;
+
 
 public class RangedAttackAction : CharacterAttackAction
 {
@@ -11,18 +11,6 @@ public class RangedAttackAction : CharacterAttackAction
     {
         base.Attack();
 
-        _character.SpawnAttackObject(EAttackObject.Normal);
+        _character.SpawnAttackObject(EAttackObject.Normal, _character.MuzzleTransform.position);
     }
-
-    public void SpawnProjectile_NormalAttack()
-    {
-        // 나중에 오브젝트 풀링으로 실행 고려
-        //Instantiate(_projectile, transform.position, )
-    }
-
-    //public void SpawnProjectile_NormalAttack()
-    //{
-    //    // 나중에 오브젝트 풀링으로 실행 고려
-    //    Instantiate(_projectile, transform.position, )
-    //}
 }

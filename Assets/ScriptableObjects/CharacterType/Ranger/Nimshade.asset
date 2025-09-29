@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a3feeffb0b5353d4296cc11c429717e4, type: 3}
-  m_Name: Byern
+  m_Name: Nimshade
   m_EditorClassIdentifier: 
-  Name: Byern
+  Name: Nimshade
   Description: 
-  CharacterType: 0
-  WeaponType: 0
-  MaxHP: 800
-  MaxMP: 60
-  Armor: 45
-  MagicResistance: 25
-  AttackDamage: 65
+  CharacterType: 2
+  WeaponType: 5
+  MaxHP: 0
+  MaxMP: 0
+  Armor: 0
+  MagicResistance: 0
+  AttackDamage: 0
   AbilityPower: 0
-  AttackSpeed: 1.25
-  CriticalProbability: 5
-  CriticalDamage: 5
-  MoveSpeed: 1
-  Stamina: 100
+  AttackSpeed: 0
+  CriticalProbability: 0
+  CriticalDamage: 0
+  MoveSpeed: 0
+  Stamina: 0
   IncreasedDamage: 0
   Drain: 0
-  Range: 1
+  Range: 0
   NormalAttackObject: {fileID: 0}
   SkillObject: {fileID: 0}
   UltimateObject: {fileID: 0}

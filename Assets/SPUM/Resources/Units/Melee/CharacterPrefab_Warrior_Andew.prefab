@@ -5934,7 +5934,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eb16df645ac0e749b8952cd974fdf8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statSO: {fileID: 11400000, guid: be2316efa48fcbf4c806743b72fe1d39, type: 2}
+  _statSO: {fileID: 11400000, guid: be2316efa48fcbf4c806743b72fe1d39, type: 2}
   _dir: {x: 0, y: 0}
   _isFacingLeft: 1
 --- !u!61 &8372267091999115026
