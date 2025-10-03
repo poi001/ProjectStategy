@@ -18,7 +18,11 @@ public class CharacterStatScriptableObject : ScriptableObject
     public float MaxHP;
     public float MaxMP;
     public float Armor;
+    public float ArmorPenetration_Flat;
+    public float ArmorPenetration_Percent;
     public float MagicResistance;
+    public float MagicResistancePenetration_Flat;
+    public float MagicResistancePenetration_Percent;
     public float AttackDamage;
     public float AbilityPower;
     public float AttackSpeed;

@@ -1,5 +1,5 @@
 using System.Collections;
-using UnityEngine.TextCore.Text;
+using System.Collections.Generic;
 
 public class StatHandler
 {
@@ -19,9 +19,13 @@ public class StatHandler
         CurrentMP = 0.0f;
     }
 
-    public float TakeDamaged(float value)
+    // 캐릭터 체력, 마나 관련
+    public float TakeDamage(float damage, bool isAD = true)
     {
-        CurrentHP -= value;
+        ECharacterStatType damageType = isAD ? ECharacterStatType.AttackDamage : ECharacterStatType.AbilityPower;
+        DamageModifer damageModifer = new DamageModifer(_stat, damageType);
+
+        CurrentHP -= damageModifer.Damage();
 
         if (CurrentHP <= 0.0f)
         {
@@ -33,7 +37,6 @@ public class StatHandler
 
         return CurrentHP;
     }
-
     public void RegenMana(float value)
     {
         CurrentMP += value;
@@ -48,41 +51,38 @@ public class StatHandler
 
         _character.OnUseMana?.Invoke();
     }
-
     public void UseMana()
     {
         _character.OnUseMana?.Invoke();
     }
-
     public void CharacterDie()
     {
         _character.OnDeath?.Invoke();
     }
 
+    // 스탯 적용
     public void ApplyStat(ECharacterStatType statType, StatModifier modifier)
     {
         _stat._statDict[statType].AddModifier(modifier);
     }
-
     public void ApplyStat(ECharacterStatType statType, StatModifier modifier, float during, string key = null)
     {
         _stat._statDict[statType].AddModifier(modifier);
         CoroutineManager.Instance.StartManagedCoroutine(ResetApplyStat(statType, modifier, during), key);
     }
-
-    public void DeleteApplyStat(ECharacterStatType statType, StatModifier modifier)
+    public void DeleteApplyStat(ECharacterStatType statType, StatModifier modifier, string key = null)
     {
-        _stat._statDict[statType].RemoveModifier(modifier);
+        if (string.IsNullOrEmpty(key))
+            _stat._statDict[statType].RemoveModifier(modifier);
+        else
+            CoroutineManager.Instance.StopManagedCoroutine(key);
     }
 
-    public void DeleteApplyStat(ECharacterStatType statType, StatModifier modifier, string key)
-    {
-        CoroutineManager.Instance.StopManagedCoroutine(key);
-    }
-
+    // 코루틴
     private IEnumerator ResetApplyStat(ECharacterStatType statType, StatModifier modifier, float during)
     {
         yield return YieldCache.WaitForSeconds(during);
         _stat._statDict[statType].RemoveModifier(modifier);
     }
+
 }

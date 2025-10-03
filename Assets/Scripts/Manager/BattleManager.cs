@@ -2,8 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BattleManager : SingletonWithScene<BattleManager>
+public class BattleManager : SingletonWithScene<BattleManager>, IAboutSceneManager
 {
+    public EGameState State { get; } = EGameState.Battle;
+
     // 인스펙터에 넣은 프리팹 ( 임의 )
     [SerializeField]
     private GameObject[] _blueCharacters = new GameObject[DefineClass.NumberOfPlayers];
@@ -35,7 +37,7 @@ public class BattleManager : SingletonWithScene<BattleManager>
         SpawnBlueTeam();
         SpawnRedTeam();
 
-        //Instantiate(_uiManager).GetComponent<UIManager>().Init(_characters);
+        Instantiate(_uiManager).GetComponent<UIManager>().Init(_characters);
     }
 
     private void SpawnBlueTeam()
@@ -159,6 +161,16 @@ public class BattleManager : SingletonWithScene<BattleManager>
             if (obj != null) return true;
 
         return false;
+    }
+
+    public void EnterScene()
+    {
+
+    }
+
+    public void ExitScene()
+    {
+
     }
 
     //private void OnEnable()

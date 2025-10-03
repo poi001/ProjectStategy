@@ -25,9 +25,8 @@ public abstract class AttackObject : MonoBehaviour
     public virtual void Init(Character owner, float speed = -1.0f)
     {
         Owner = owner;
-
         Damage = owner.Stats.AttackDamage;
-        Speed = speed <= 1.0f ? Speed : speed;
+        Speed = speed < 0.0f ? Speed : speed;
 
         if (owner.IsPlayerTeam)
         {

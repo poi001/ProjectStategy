@@ -1,5 +1,4 @@
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 
 public class Projectile : AttackObject
@@ -12,7 +11,7 @@ public class Projectile : AttackObject
 
         if (collision.CompareTag(enemyTag))
         {
-            collision.GetComponent<Character>().Stats.StatHandler.TakeDamaged(Damage);
+            collision.GetComponent<Character>().Stats.StatHandler.TakeDamage(Damage);
             Destroy(gameObject);
         }
     }

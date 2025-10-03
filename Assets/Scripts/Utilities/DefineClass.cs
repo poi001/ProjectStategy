@@ -1,3 +1,12 @@
+public interface IAboutSceneManager
+{
+    public EGameState State { get; }
+
+    public void EnterScene();
+    public void ExitScene();
+}
+
+
 public enum EGameState
 {
     None = 0,
@@ -22,7 +31,11 @@ public enum ECharacterStatType
     MaxHP = 0,
     MaxMP,
     Armor,
+    ArmorPenetration_Flat,
+    ArmorPenetration_Percent,
     MagicResistance,
+    MagicResistancePenetration_Flat,
+    MagicResistancePenetration_Percent,
     AttackDamage,
     AbilityPower,
     AttackSpeed,
@@ -100,4 +113,7 @@ public class DefineClass
     public const string Tag_EnemySkill = "EnemySkill";
     public const string Tag_DeadPlayer = "DeadPlayer";
     public const string Tag_DeadEnemy = "DeadEnemy";
+
+    // ¸Å´ÏÀú µñ¼Å³Ê¸® Å° °ª
+    public const string MngDictKey_BattleManager = "BattleManager";
 }

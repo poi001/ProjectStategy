@@ -15,7 +15,11 @@ public class CharacterStat
     private Stat _maxHP;
     private Stat _maxMP;
     private Stat _armor;
+    private Stat _armorPenetration_Flat;
+    private Stat _armorPenetration_Percent;
     private Stat _magicResistance;
+    private Stat _magicResistancePenetration_Flat;
+    private Stat _magicResistancePenetration_Percent;
     private Stat _attackDamage;
     private Stat _abilityPower;
     private Stat _attackSpeed;
@@ -30,7 +34,11 @@ public class CharacterStat
     public float MaxHP => _maxHP.FinalValue;
     public float MaxMP => _maxMP.FinalValue;
     public float Armor => _armor.FinalValue;
+    public float ArmorPenetration_Flat => _armorPenetration_Flat.FinalValue;
+    public float ArmorPenetration_Percent => _armorPenetration_Percent.FinalValue;
     public float MagicResistance => _magicResistance.FinalValue;
+    public float MagicResistancePenetration_Flat => _magicResistancePenetration_Flat.FinalValue;
+    public float MagicResistancePenetration_Percent => _magicResistancePenetration_Percent.FinalValue;
     public float AttackDamage => _attackDamage.FinalValue;
     public float AbilityPower => _abilityPower.FinalValue;
     public float AttackSpeed => _attackSpeed.FinalValue;
@@ -56,20 +64,35 @@ public class CharacterStat
     {
         _character = character;
 
+        // HP, MP
         _statDict.Add(ECharacterStatType.MaxHP, _maxHP = new Stat(so.MaxHP));
         _statDict.Add(ECharacterStatType.MaxMP, _maxMP = new Stat(so.MaxMP));
+
+        // 방어, 마저
         _statDict.Add(ECharacterStatType.Armor, _armor = new Stat(so.Armor));
+        _statDict.Add(ECharacterStatType.ArmorPenetration_Flat, 
+            _armorPenetration_Flat = new Stat(so.ArmorPenetration_Flat));
+        _statDict.Add(ECharacterStatType.ArmorPenetration_Percent, 
+            _armorPenetration_Percent = new Stat(so.ArmorPenetration_Percent));
         _statDict.Add(ECharacterStatType.MagicResistance, _magicResistance = new Stat(so.MagicResistance));
+        _statDict.Add(ECharacterStatType.MagicResistancePenetration_Flat, 
+            _magicResistancePenetration_Flat = new Stat(so.MagicResistancePenetration_Flat));
+        _statDict.Add(ECharacterStatType.MagicResistancePenetration_Percent, 
+            _magicResistancePenetration_Percent = new Stat(so.MagicResistancePenetration_Percent));
+
+        // 공격
         _statDict.Add(ECharacterStatType.AttackDamage, _attackDamage = new Stat(so.AttackDamage));
         _statDict.Add(ECharacterStatType.AbilityPower, _abilityPower = new Stat(so.AbilityPower));
         _statDict.Add(ECharacterStatType.AttackSpeed, _attackSpeed = new Stat(so.AttackSpeed));
         _statDict.Add(ECharacterStatType.CriticalProbability, _criticalProbability = new Stat(so.CriticalProbability));
         _statDict.Add(ECharacterStatType.CriticalDamage, _criticalDamage = new Stat(so.CriticalDamage));
+        _statDict.Add(ECharacterStatType.IncreasedDamage, _increasedDamage = new Stat(so.IncreasedDamage));
+        _statDict.Add(ECharacterStatType.Range, _range = new Stat(so.Range));
+
+        // 유틸리티
         _statDict.Add(ECharacterStatType.MoveSpeed, _moveSpeed = new Stat(so.MoveSpeed));
         _statDict.Add(ECharacterStatType.Stamina, _stamina = new Stat(so.Stamina));
-        _statDict.Add(ECharacterStatType.IncreasedDamage, _increasedDamage = new Stat(so.IncreasedDamage));
         _statDict.Add(ECharacterStatType.Drain, _drain = new Stat(so.Drain));
-        _statDict.Add(ECharacterStatType.Range, _range = new Stat(so.Range));
 
         this.StatHandler = new StatHandler(character, this);
     }

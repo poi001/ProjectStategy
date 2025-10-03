@@ -47,10 +47,10 @@ public class Character : MonoBehaviour
         OnDamaged = null;
     }
 
-    private void Start()
-    {
-        InitCharacter();
-    }
+    //private void Start()
+    //{
+    //    InitCharacter();
+    //}
 
     private void Update()
     {

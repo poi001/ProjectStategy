@@ -1,15 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : SingletonWithMono<GameManager>
 {
-    // 매니저 오브젝트 ( 직렬화 )
-    [SerializeField]
-    private GameObject _battleManagerObject;
-
-    // 매니저 스크립트
-    private BattleManager _battleManager;
+    public SerializableDictionary<string, GameObject> ManagerDictionary;
 
     // 기타
     private EGameState _state;
@@ -22,8 +18,7 @@ public class GameManager : SingletonWithMono<GameManager>
 
     private void Init()
     {
-
-
+        // temp
         ChangeGameState(EGameState.Battle);
     }
 
@@ -36,7 +31,7 @@ public class GameManager : SingletonWithMono<GameManager>
             case EGameState.Lobby:
                 break;
             case EGameState.Battle:
-
+                FindIAboutSceneManager(Instantiate(ManagerDictionary.Dict[DefineClass.MngDictKey_BattleManager]));
                 break;
             case EGameState.Room:
                 break;
@@ -50,5 +45,18 @@ public class GameManager : SingletonWithMono<GameManager>
         EventBus.Publish(gameState);
     }
 
+    public GameObject GetManagerObject(string key)
+    {
+        if (ManagerDictionary.Dict.ContainsKey(key)) return ManagerDictionary.Dict[key];
 
+        return null;
+    }
+
+    private void FindIAboutSceneManager(GameObject obj)
+    {
+        if (obj.TryGetComponent<IAboutSceneManager>(out IAboutSceneManager managerInterface))
+        {
+            EventBus.Register(managerInterface.State, managerInterface.EnterScene);
+        }
+    }
 }
