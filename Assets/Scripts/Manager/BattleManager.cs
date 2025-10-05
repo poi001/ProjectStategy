@@ -2,10 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BattleManager : SingletonWithScene<BattleManager>, IAboutSceneManager
+public class BattleManager : SingletonWithScene<BattleManager>, IManagerInterface
 {
-    public EGameState State { get; } = EGameState.Battle;
-
     // 인스펙터에 넣은 프리팹 ( 임의 )
     [SerializeField]
     private GameObject[] _blueCharacters = new GameObject[DefineClass.NumberOfPlayers];
@@ -27,9 +25,23 @@ public class BattleManager : SingletonWithScene<BattleManager>, IAboutSceneManag
     private float[] _posYRate = { 0.0f, -1.0f, 1.5f, -1.0f, -1.0f };
 
 
-    private void Start()
+
+    private List<Character> _blueTeamCharacters = new();
+    private List<Character> _redTeamCharacters = new();
+
+
+    public EGameState State { get; } = EGameState.Battle;
+
+
+    public void EnterScene()
     {
-        Init();
+        //EventBus.Register
+
+    }
+
+    public void ExitScene()
+    {
+
     }
 
     public void Init()
@@ -162,26 +174,6 @@ public class BattleManager : SingletonWithScene<BattleManager>, IAboutSceneManag
 
         return false;
     }
-
-    public void EnterScene()
-    {
-
-    }
-
-    public void ExitScene()
-    {
-
-    }
-
-    //private void OnEnable()
-    //{
-    //    EventBus.Register(EGameState.Battle, SetTeam);
-    //}
-
-    //private void OnDisable()
-    //{
-    //    EventBus.Unregister(EGameState.Battle, SetTeam);
-    //}
 
 
 }

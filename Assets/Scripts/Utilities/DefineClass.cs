@@ -1,4 +1,4 @@
-public interface IAboutSceneManager
+public interface IManagerInterface
 {
     public EGameState State { get; }
 

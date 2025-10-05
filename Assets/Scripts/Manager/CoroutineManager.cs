@@ -6,6 +6,8 @@ public class CoroutineManager : SingletonWithMono<CoroutineManager>
 {
     private Dictionary<string, Coroutine> activeCoroutines = new Dictionary<string, Coroutine>();
 
+    public EGameState State { get; } = EGameState.None;
+
     public Coroutine StartManagedCoroutine(IEnumerator routine, string key = null)
     {
         if (!string.IsNullOrEmpty(key))

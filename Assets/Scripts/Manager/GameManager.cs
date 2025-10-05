@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class GameManager : SingletonWithMono<GameManager>
 {
-    public SerializableDictionary<string, GameObject> ManagerDictionary;
+    // 직렬화
+    public SerializableDictionary<string, GameObject> ManagerDictionary = new SerializableDictionary<string, GameObject>();
 
     // 기타
-    private EGameState _state;
+    private Dictionary<string, IManagerInterface> _managerInterfaceDict = new();
+    private IManagerInterface _currentManagerInterface;
 
 
     private void Start()
@@ -18,6 +20,8 @@ public class GameManager : SingletonWithMono<GameManager>
 
     private void Init()
     {
+        InitManagerInterfaceDict();
+
         // temp
         ChangeGameState(EGameState.Battle);
     }
@@ -31,7 +35,7 @@ public class GameManager : SingletonWithMono<GameManager>
             case EGameState.Lobby:
                 break;
             case EGameState.Battle:
-                FindIAboutSceneManager(Instantiate(ManagerDictionary.Dict[DefineClass.MngDictKey_BattleManager]));
+                Instantiate(ManagerDictionary.Dict[DefineClass.MngDictKey_BattleManager]);
                 break;
             case EGameState.Room:
                 break;
@@ -41,7 +45,7 @@ public class GameManager : SingletonWithMono<GameManager>
                 break;
         }
 
-        _state = gameState;
+
         EventBus.Publish(gameState);
     }
 
@@ -52,11 +56,19 @@ public class GameManager : SingletonWithMono<GameManager>
         return null;
     }
 
-    private void FindIAboutSceneManager(GameObject obj)
+    public GameObject GetManagerInterface(string key)
     {
-        if (obj.TryGetComponent<IAboutSceneManager>(out IAboutSceneManager managerInterface))
+        if (_managerInterfaceDict.ContainsKey(key)) return ManagerDictionary.Dict[key];
+
+        return null;
+    }
+
+    private void InitManagerInterfaceDict()
+    {
+        foreach (var pair in ManagerDictionary.Dict)
         {
-            EventBus.Register(managerInterface.State, managerInterface.EnterScene);
+            if (pair.Value.TryGetComponent<IManagerInterface>(out IManagerInterface managerInterface))
+                _managerInterfaceDict.Add(pair.Key, managerInterface);
         }
     }
 }
