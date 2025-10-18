@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CoroutineManager : SingletonWithMono<CoroutineManager>
+public class CoroutineManager : SingletonWithMono<CoroutineManager>, IManagerInterface
 {
     private Dictionary<string, Coroutine> activeCoroutines = new Dictionary<string, Coroutine>();
 
-    public EGameState State { get; } = EGameState.None;
+
+    public IEnumerator Init()
+    {
+        yield return new WaitForSeconds(0.15f); // ← 가짜 로딩 ( 너무 로딩이 빠르면 어색하기 때문, 나중에 비동기 메서드로 교체 )
+    }
 
     public Coroutine StartManagedCoroutine(IEnumerator routine, string key = null)
     {

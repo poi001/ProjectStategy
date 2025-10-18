@@ -35,7 +35,7 @@ public class MoveState : CharacterBaseState
             if (stateMachine.Character.Stats.Range >=
                     Vector2.Distance(stateMachine.Character.transform.position, stateMachine.Character.Target.transform.position))
             {
-                if (stateMachine.Character.AttackTimer.Attack())
+                if (stateMachine.Character.AttackAction.IsPossibleAttack())
                 {
                     stateMachine.ChanageState(stateMachine.attackState);
                     return;

@@ -12,7 +12,7 @@ public class Singleton<T> where T : class, new()
 
     public static T Instance => _instance.Value;
 
-    private Singleton() { }
+    protected Singleton() { }
 }
 
 public class SingletonWithMono<T> : MonoBehaviour where T : MonoBehaviour
@@ -122,7 +122,7 @@ public class ScriptableObjectSingleton<T> : ScriptableObject where T : Scriptabl
         {
             if (_instance == null)
             {
-                _instance = Resources.Load($"Assets/{typeof(T).Name}") as T;
+                _instance = Resources.Load($"SO/{typeof(T).Name}") as T;
                 if (_instance == null)
                 {
                     _instance = CreateInstance<T>();

@@ -1,74 +1,50 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : SingletonWithMono<GameManager>
 {
-    // 직렬화
-    public SerializableDictionary<string, GameObject> ManagerDictionary = new SerializableDictionary<string, GameObject>();
-
-    // 기타
-    private Dictionary<string, IManagerInterface> _managerInterfaceDict = new();
-    private IManagerInterface _currentManagerInterface;
+    public EGameState CurrentGameState = EGameState.None;
 
 
     private void Start()
     {
-        Init();
+        StartCoroutine(InitManager.Instance.Init());
     }
 
-    private void Init()
+    public void OnManagersInitialized()
     {
-        InitManagerInterfaceDict();
-
-        // temp
-        ChangeGameState(EGameState.Battle);
+        //ChangeGameState(EGameState.Lobby);
+        LoadManager.Instance.ChangeGameState(EGameState.Lobby);
     }
 
-    public void ChangeGameState(EGameState gameState)
-    {
-        switch (gameState)
-        {
-            case EGameState.Title:
-                break;
-            case EGameState.Lobby:
-                break;
-            case EGameState.Battle:
-                Instantiate(ManagerDictionary.Dict[DefineClass.MngDictKey_BattleManager]);
-                break;
-            case EGameState.Room:
-                break;
-            case EGameState.Result:
-                break;
-            default:
-                break;
-        }
+    //public void ChangeGameState(EGameState gameState)
+    //{
+    //    switch (gameState)
+    //    {
+    //        case EGameState.Bootstrap:
+    //            GameStateName = DefineClass.Scene_Bootstrap;
+    //            break;
+    //        case EGameState.Title:
+    //            GameStateName = DefineClass.Scene_Title;
+    //            break;
+    //        case EGameState.Lobby:
+    //            GameStateName = DefineClass.Scene_Lobby;
+    //            break;
+    //        case EGameState.Battle:
+    //            GameStateName = DefineClass.Scene_Battle;
+    //            break;
+    //        case EGameState.Room:
+    //            break;
+    //        case EGameState.Result:
+    //            break;
+    //        default:
+    //            break;
+    //    }
+
+    //    GameState = gameState;
+    //    LoadManager.Instance.LoadScene(GameStateName);
+    //    EventBus.Publish(gameState);
+    //}
 
 
-        EventBus.Publish(gameState);
-    }
-
-    public GameObject GetManagerObject(string key)
-    {
-        if (ManagerDictionary.Dict.ContainsKey(key)) return ManagerDictionary.Dict[key];
-
-        return null;
-    }
-
-    public GameObject GetManagerInterface(string key)
-    {
-        if (_managerInterfaceDict.ContainsKey(key)) return ManagerDictionary.Dict[key];
-
-        return null;
-    }
-
-    private void InitManagerInterfaceDict()
-    {
-        foreach (var pair in ManagerDictionary.Dict)
-        {
-            if (pair.Value.TryGetComponent<IManagerInterface>(out IManagerInterface managerInterface))
-                _managerInterfaceDict.Add(pair.Key, managerInterface);
-        }
-    }
 }

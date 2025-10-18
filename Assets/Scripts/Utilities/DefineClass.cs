@@ -1,15 +1,39 @@
+using System.Collections;
+
 public interface IManagerInterface
 {
-    public EGameState State { get; }
-
-    public void EnterScene();
-    public void ExitScene();
+    public IEnumerator Init();
+}
+public interface IManagerWithSceneInterface
+{
+    public IEnumerator Init();
+}
+public interface IAttackAction
+{
+    public void Attack();
+}
+public interface IMoveAction
+{
+    public void Move();
+}
+public interface IPassive
+{
+    public void ApplyPassive();
+}
+public interface ISkill
+{
+    public void ActiveSkill();
+}
+public interface IBuff
+{
+    public void ActiveBuff(bool isBuff);
 }
 
 
 public enum EGameState
 {
     None = 0,
+    Bootstrap,
     Title,
     Lobby,
     Battle,
@@ -116,4 +140,20 @@ public class DefineClass
 
     // 매니저 딕셔너리 키 값
     public const string MngDictKey_BattleManager = "BattleManager";
+
+    // 씬
+    public const string Scene_Bootstrap = "BootstrapScene";
+    public const string Scene_Battle = "BattleScene";
+    public const string Scene_Lobby = "LobbyScene";
+    public const string Scene_Title = "TitleScene";
+    public const string Scene_Load = "LoadScene";
+
+    // 스폰 위치
+
+
+    // UI Canvas 이름
+    public const string UI_HPMPBarUICanvas = "HPMPBarUICanvas";
+
+    // Resources 경로
+    public const string Path_UICanvas = "Prefabs/UI/Canvas";
 }

@@ -32,17 +32,14 @@ public class IdleState : CharacterBaseState
         base.Update();
 
         // 제일 가까운 적을 찾음
-        GetCharacter();
+        FindCharacter();
     }
 
-    private void GetCharacter()
+    private void FindCharacter()
     {
-        if (BattleManager.Instance != null)
+        if (BattleManager.Instance != null && stateMachine.Character.Target != null)
         {
-            if (BattleManager.Instance.GetActiveEnemy(stateMachine.Character.IsPlayerTeam) && stateMachine.Character.Target != null)
-            {
-                stateMachine.ChanageState(stateMachine.moveState);
-            }
+            stateMachine.ChanageState(stateMachine.moveState);
         }
     }
 }

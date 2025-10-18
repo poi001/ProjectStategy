@@ -1,179 +1,84 @@
-using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
-public class BattleManager : SingletonWithScene<BattleManager>, IManagerInterface
+public class BattleManager : SingletonWithScene<BattleManager>, IManagerWithSceneInterface
 {
-    // 인스펙터에 넣은 프리팹 ( 임의 )
+    // 소환 위치 오브젝트
+    [Header("SpawnObjectTransform")]
     [SerializeField]
-    private GameObject[] _blueCharacters = new GameObject[DefineClass.NumberOfPlayers];
+    private Transform[] _playerSpawnPosArray;
     [SerializeField]
-    private GameObject[] _redCharacters = new GameObject[DefineClass.NumberOfPlayers];
+    private Transform[] _enemySpawnPosArray;
 
-    // 소환된 캐릭터
-    private GameObject[] _blueCharacters2 = new GameObject[DefineClass.NumberOfPlayers];
-    private GameObject[] _redCharacters2 = new GameObject[DefineClass.NumberOfPlayers];
-
-    // temp
-    private List<Character> _characters = new();
-    [SerializeField]
-    private GameObject _uiManager;
-
-    private float _posX = -2.5f;
-    private float _posY = 0.5f;
-    private float[] _posXRate = { 0.0f, 0.0f, 2.5f, 0.0f, 0.0f };
-    private float[] _posYRate = { 0.0f, -1.0f, 1.5f, -1.0f, -1.0f };
+    // 캐릭터 오브젝트들
+    private (GameObject, Character)[] _playerCharacters;
+    private (GameObject, Character)[] _enemyCharacters;
 
 
-
-    private List<Character> _blueTeamCharacters = new();
-    private List<Character> _redTeamCharacters = new();
-
-
-    public EGameState State { get; } = EGameState.Battle;
-
-
-    public void EnterScene()
+    public IEnumerator Init()
     {
-        //EventBus.Register
+        SetupCharacters(out _playerCharacters, PlayerDataScriptableObject.Instance.Memebers, _playerSpawnPosArray);
+        SetupCharacters(out _enemyCharacters, PlayerDataScriptableObject.Instance.EnemyMemebers, _enemySpawnPosArray);
+        yield return StartCoroutine(InitCharacters());
 
+        HPMPUICanvas hpmpUICanvas = UIManager.Instance.ShowUI(DefineClass.UI_HPMPBarUICanvas).GetComponent<HPMPUICanvas>();
+        hpmpUICanvas.SpawnAllyHPMPBarUI(_playerCharacters);
+        hpmpUICanvas.SpawnEnemyHPMPBarUI(_enemyCharacters);
+
+        // 선택적으로 추가 처리
+        // 예: AI 초기화, 카메라 위치 조정 등
+        yield return new WaitForSeconds(0.2f); // 필요 시 연출용
     }
 
-    public void ExitScene()
+    private void SetupCharacters(out (GameObject, Character)[] characters, GameObject[] members, Transform[] transf)
     {
+        characters = new(GameObject, Character)[DefineClass.NumberOfPlayers];
 
-    }
-
-    public void Init()
-    {
-        SpawnBlueTeam();
-        SpawnRedTeam();
-
-        Instantiate(_uiManager).GetComponent<UIManager>().Init(_characters);
-    }
-
-    private void SpawnBlueTeam()
-    {
-        for (int i = 0; i < _blueCharacters.Length; i++)
+        for (int i = 0; i < DefineClass.NumberOfPlayers; i++)
         {
-            _posX -= _posXRate[i];
-            _posY += _posYRate[i];
-            Vector2 pos = new Vector2(_posX, _posY);
-            _blueCharacters2[i] = Instantiate(_blueCharacters[i], pos, Quaternion.identity);
-
-            // temp
-            _characters.Add(_blueCharacters2[i].GetComponent<Character>());
-        }
-
-        _posX = -2.5f;
-        _posY = 0.5f;
-}
-
-    private void SpawnRedTeam()
-    {
-        _posX *= -1.0f;
-
-        for (int i = 0; i < _redCharacters.Length; i++)
-        {
-            _posX += _posXRate[i];
-            _posY += _posYRate[i];
-            Vector2 pos = new Vector2(_posX, _posY);
-            _redCharacters2[i] = Instantiate(_redCharacters[i], pos, Quaternion.identity);
-
-            // temp
-            _characters.Add(_redCharacters2[i].GetComponent<Character>());
-        }
-
-        _posX = -2.5f;
-        _posY = 0.5f;
-    }
-
-    public Character GetNearEnemy(bool isBlueTeam, Vector2 pos)
-    {
-        return CopareNearestDistance(isBlueTeam, true, pos);
-    }
-
-    public Character GetNearAllyCharacter(bool isBlueTeam, Vector2 pos)
-    {
-        return CopareNearestDistance(isBlueTeam, false, pos);
-    }
-
-    public bool GetActiveEnemy(bool isBlueTeam)
-    {
-        return GetActiveCharacter(isBlueTeam, false, true);
-    }
-
-    public bool GetActiveAlly(bool isBlueTeam, Vector2 pos)
-    {
-        return GetActiveCharacter(isBlueTeam, false, false);
-    }
-
-    public bool GetActiveCharacter(bool isBlueTeam, Vector2 pos)
-    {
-        return GetActiveCharacter(isBlueTeam, true);
-    }
-
-    private Character CopareNearestDistance(bool isBlueTeam, bool isFindObjectIsEnemy, Vector2 pos)
-    {
-        float distance;
-        float nearestDistance = 9999.0f;
-        Character nearestCharacter = null;
-        GameObject[] characterObjects = new GameObject[DefineClass.NumberOfPlayers];
-
-        if (isBlueTeam)
-        {
-            if (isFindObjectIsEnemy) characterObjects = _redCharacters2;
-            else characterObjects = _blueCharacters2;
-        }
-        else
-        {
-            if (isFindObjectIsEnemy) characterObjects = _blueCharacters2;
-            else characterObjects = _redCharacters2;
-        }
-
-        foreach (var obj in characterObjects)
-        {
-            if (obj.GetComponent<Character>().StateMachine.CurrentCharacterState == ECharacterState.Death)
+            if (!members[i])
+            {
+                characters[i].Item1 = null;
+                characters[i].Item2 = null;
                 continue;
-
-            distance = Vector2.Distance(pos, obj.transform.position);
-            if (nearestDistance > distance)
-            {
-                nearestDistance = distance;
-                obj.TryGetComponent<Character>(out nearestCharacter);
             }
-        }
 
-        return nearestCharacter;
+            characters[i].Item1 = Instantiate(members[i], transf[i].position, Quaternion.identity);
+            characters[i].Item2 = characters[i].Item1.GetComponent<Character>();
+        }
     }
 
-    private bool GetActiveCharacter(bool isBlueTeam, bool isFindingObjectIsCharacter, bool isFindingObjectIsEnemy = true)
+    private IEnumerator InitCharacters()
     {
-        GameObject[] characterObjects = new GameObject[DefineClass.NumberOfPlayers];
+        foreach (var playerCharacters in _playerCharacters) playerCharacters.Item2.InitCharacter(true);
+        foreach (var enemyCharacters in _enemyCharacters) enemyCharacters.Item2.InitCharacter(false);
 
-        if (isFindingObjectIsCharacter)
-        {
-            characterObjects = _blueCharacters2.Concat(_redCharacters2).ToArray();
-        }
-        else
-        {
-            if (isFindingObjectIsEnemy)
-            {
-                if (isBlueTeam) characterObjects = _redCharacters2;
-                else characterObjects = _blueCharacters2;
-            }
-            else
-            {
-                if (isBlueTeam) characterObjects = _blueCharacters2;
-                else characterObjects = _redCharacters2;
-            }
-        }
-
-        foreach(var obj in characterObjects) 
-            if (obj != null) return true;
-
-        return false;
+        yield return null;
     }
 
+    // 자신과 제일 가까운 캐릭터순으로 정렬됨
+    public (GameObject, Character)[] GetAllyCharacters(Character character = null)
+    {
+        if (character != null)
+        {
+            Vector2 pos = (Vector2)character.transform.position;
+            var sorted = _playerCharacters.OrderBy(c => Vector2.Distance(pos, c.Item2.transform.position)).ToArray();
+            return sorted;
+        }
 
+        return _playerCharacters;
+    }
+    public (GameObject, Character)[] GetEnemyCharacters(Character character = null)
+    {
+        if (character != null)
+        {
+            Vector2 pos = (Vector2)character.transform.position;
+            var sorted = _enemyCharacters.OrderBy(c => Vector2.Distance(pos, c.Item2.transform.position)).ToArray();
+            return sorted;
+        }
+
+        return _enemyCharacters;
+    }
 }

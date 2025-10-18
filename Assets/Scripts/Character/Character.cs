@@ -11,7 +11,6 @@ public class Character : MonoBehaviour
     public CharacterStateMachine StateMachine { get; private set; }
     public CharacterAnimationData AnimationData { get; protected set; }
     public CharacterStat Stats { get; protected set; }
-    public CharacterAttackTimer AttackTimer { get; protected set; }
     public CharacterAttackAction AttackAction { get; protected set; }
 
     // 직렬화
@@ -30,9 +29,10 @@ public class Character : MonoBehaviour
     public GameObject UltimateObject { get; private set; }
 
     // 기타
+    public Character Target { get; private set; }
     [HideInInspector]
     public Vector2 _dir = Vector2.zero;
-    public Character Target { get; private set; }
+    [HideInInspector]
     public bool _isFacingLeft = true;
 
     // 델리게이트
@@ -47,25 +47,24 @@ public class Character : MonoBehaviour
         OnDamaged = null;
     }
 
-    //private void Start()
-    //{
-    //    InitCharacter();
-    //}
-
     private void Update()
     {
         // temp Target
         if(StateMachine != null && StateMachine.CurrentCharacterState != ECharacterState.Attack)
-            Target = BattleManager.Instance.GetNearEnemy(IsPlayerTeam, transform.position);
+        {
+            if(IsPlayerTeam) Target = BattleManager.Instance.GetEnemyCharacters(this)[0].Item2;
+            else Target = BattleManager.Instance.GetAllyCharacters(this)[0].Item2;
+        }
+        else Target = null;
 
         // 스테이트 머신의 Update
         if (StateMachine != null && StateMachine.currentState != null) StateMachine.Update();
 
         // 공격 타이머
-        if (AttackTimer != null) AttackTimer.UpdateAttackTimer();
+        if (AttackAction != null) AttackAction.UpdateAttackTimer();
     }
 
-    public void InitCharacter()
+    public void InitCharacter(bool isAlly)
     {
         // 컴포넌트
         Animator = GetComponentInChildren<Animator>();
@@ -83,22 +82,10 @@ public class Character : MonoBehaviour
         Stats = new CharacterStat(this, _statSO);
         AnimationData = new CharacterAnimationData();
         StateMachine = new CharacterStateMachine(this);
-        AttackTimer = new CharacterAttackTimer(this);
         SettingCharacterType(CharacterType);
 
         // 레이어, 태그 설정
-        if (transform.position.x < 0.0f) IsPlayerTeam = true; // temp
-        else IsPlayerTeam = false; // temp
-        if (IsPlayerTeam)
-        {
-            gameObject.layer = LayerMask.NameToLayer(DefineClass.Layer_Player);
-            gameObject.tag = DefineClass.Tag_Player;
-        }
-        else
-        {
-            gameObject.layer = LayerMask.NameToLayer(DefineClass.Layer_Enemy);
-            gameObject.tag = DefineClass.Tag_Enemy;
-        }
+        SettingTeam(isAlly);
 
         // 델리게이트
         OnDeath += Death;
@@ -122,6 +109,22 @@ public class Character : MonoBehaviour
                 break;
             default:
                 break;
+        }
+    }
+
+    private void SettingTeam(bool isPlayerTeam)
+    {
+        IsPlayerTeam = isPlayerTeam;
+
+        if (IsPlayerTeam)
+        {
+            gameObject.layer = LayerMask.NameToLayer(DefineClass.Layer_Player);
+            gameObject.tag = DefineClass.Tag_Player;
+        }
+        else
+        {
+            gameObject.layer = LayerMask.NameToLayer(DefineClass.Layer_Enemy);
+            gameObject.tag = DefineClass.Tag_Enemy;
         }
     }
 
