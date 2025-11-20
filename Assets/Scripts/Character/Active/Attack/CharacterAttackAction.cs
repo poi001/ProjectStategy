@@ -10,6 +10,25 @@ public class CharacterAttackAction : IAttackAction
     public CharacterAttackAction(Character character)
     {
         _character = character;
+        CreateAttackAction(character.CharacterType);
+        _character.OnUpdate += UpdateAttackTimer;
+    }
+
+    private void CreateAttackAction(ECharacterType type)
+    {
+        switch (type)
+        {
+            case ECharacterType.Melee:
+                break;
+            case ECharacterType.Ranged:
+                break;
+            case ECharacterType.Magician:
+                break;
+            case ECharacterType.Healer:
+                break;
+            default:
+                break;
+        }
     }
 
     public void UpdateAttackTimer()
@@ -32,5 +51,15 @@ public class CharacterAttackAction : IAttackAction
     public virtual void Attack()
     {
         _character.Stats.StatHandler.RegenMana(_regenManaValue);
+    }
+
+    public virtual void UseSkill()
+    {
+
+    }
+
+    public virtual void UseUlt()
+    {
+
     }
 }

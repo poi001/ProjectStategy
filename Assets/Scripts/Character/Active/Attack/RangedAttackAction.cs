@@ -11,6 +11,20 @@ public class RangedAttackAction : CharacterAttackAction
     {
         base.Attack();
 
-        _character.SpawnAttackObject(EAttackObject.Normal, _character.MuzzleTransform.position);
+        _character.SpawnAttackObject();
+    }
+
+    public override void UseSkill()
+    {
+        base.UseSkill();
+
+
+    }
+
+    public override void UseUlt()
+    {
+        base.UseUlt();
+
+
     }
 }

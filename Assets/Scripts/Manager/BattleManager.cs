@@ -1,16 +1,13 @@
 using System.Collections;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 public class BattleManager : SingletonWithScene<BattleManager>, IManagerWithSceneInterface
 {
     // 소환 위치 오브젝트
     [Header("SpawnObjectTransform")]
-    [SerializeField]
-    private Transform[] _playerSpawnPosArray;
-    [SerializeField]
-    private Transform[] _enemySpawnPosArray;
+    [SerializeField] private Transform[] _playerSpawnPosArray;
+    [SerializeField] private Transform[] _enemySpawnPosArray;
 
     // 캐릭터 오브젝트들
     private (GameObject, Character)[] _playerCharacters;

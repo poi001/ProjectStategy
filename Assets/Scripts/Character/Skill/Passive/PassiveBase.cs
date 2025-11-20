@@ -1,6 +1,6 @@
-using UnityEngine;
 
-public class PassiveBase : IPassive
+
+public abstract class PassiveBase : IPassive
 {
     protected Character owner;
 
@@ -10,8 +10,5 @@ public class PassiveBase : IPassive
         this.owner = owner;
     }
 
-    public virtual void ApplyPassive()
-    {
-
-    }
+    public abstract void ApplyPassive();
 }

@@ -12,6 +12,7 @@ public class BaseStateMachine
 {
     public IState currentState { get; private set; }
 
+
     public void ChanageState(IState state)
     {
         currentState?.Exit();

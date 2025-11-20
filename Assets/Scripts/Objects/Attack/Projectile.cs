@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class Projectile : AttackObject
 {
+    [SerializeField] private float _speed;
     private Vector3 _targetPosNormalized;
+
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
@@ -16,17 +18,19 @@ public class Projectile : AttackObject
         }
     }
 
-    public override void Init(Character owner, float speed = -1)
+    public override void Init(Character owner)
     {
-        base.Init(owner, speed);
+        base.Init(owner);
 
+        if (Owner == null) Debug.Log("Owner");
+        else if (Owner.Target == null) Debug.Log("Target");
         _targetPosNormalized = (Owner.Target.transform.position - Owner.transform.position).normalized;
         SettingRotation(_targetPosNormalized);
     }
 
     public override void UpdateObject()
     {
-        transform.position += _targetPosNormalized * Time.deltaTime * Speed;
+        transform.position += _targetPosNormalized * Time.deltaTime * _speed;
     }
 
     private void SettingRotation(Vector3 pos)

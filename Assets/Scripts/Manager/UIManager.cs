@@ -32,6 +32,11 @@ public class UIManager : SingletonWithMono<UIManager>, IManagerInterface
                 // null이 아니라면 딕셔너리에 넣는다
                 GameObject prefab = request.asset as GameObject;
                 Dict_UI.Add(name, Instantiate(prefab, transform));
+
+                // UIBase컴포넌트가 존재하는 UI Object면 Init함수를 실행한다
+                if (Dict_UI[name].TryGetComponent<UIBase>(out UIBase ui)) 
+                    yield return StartCoroutine(ui.Init());
+
                 Dict_UI[name].SetActive(false);
             }
             else
@@ -67,6 +72,14 @@ public class UIManager : SingletonWithMono<UIManager>, IManagerInterface
 
         Dict_UI[key].SetActive(false);
         return Dict_UI[key];
+    }
+
+    public void HideAllUI()
+    {
+        foreach (var item in Dict_UI)
+        {
+            item.Value.SetActive(false);
+        }
     }
 
     public void ToggleUI(string key)

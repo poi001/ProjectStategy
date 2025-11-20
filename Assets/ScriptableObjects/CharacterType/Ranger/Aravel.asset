@@ -19,7 +19,11 @@ MonoBehaviour:
   MaxHP: 700
   MaxMP: 50
   Armor: 45
+  ArmorPenetration_Flat: 0
+  ArmorPenetration_Percent: 0
   MagicResistance: 30
+  MagicResistancePenetration_Flat: 0
+  MagicResistancePenetration_Percent: 0
   AttackDamage: 35
   AbilityPower: 35
   AttackSpeed: 0.8
@@ -30,6 +34,4 @@ MonoBehaviour:
   IncreasedDamage: 0
   Drain: 0
   Range: 5
-  NormalAttackObject: {fileID: 6410446256651421753, guid: ef303e3b185d80c4186dbb90afadaf4c, type: 3}
-  SkillObject: {fileID: 0}
-  UltimateObject: {fileID: 0}
+  BasicAttackFactorySO: {fileID: 11400000, guid: 5178002117b8d64409c13138aa28061f, type: 2}

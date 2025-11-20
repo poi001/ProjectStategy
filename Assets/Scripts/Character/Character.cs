@@ -5,41 +5,45 @@ public class Character : MonoBehaviour
 {
     // 컴포넌트
     public Animator Animator { get; protected set; }
-    public CharacterMovement Movement { get; protected set; }
+    public BoxCollider2D Collider { get; protected set; }
 
     // MonoBehaviour가 없는 클래스
+    public CharacterMovement Movement { get; protected set; }
     public CharacterStateMachine StateMachine { get; private set; }
     public CharacterAnimationData AnimationData { get; protected set; }
     public CharacterStat Stats { get; protected set; }
     public CharacterAttackAction AttackAction { get; protected set; }
-
-    // 직렬화
-    [SerializeField]
-    private CharacterStatScriptableObject _statSO;
-    public Transform MuzzleTransform;
+    public CharacterSearchingTarget SearchingTarget { get; protected set; }
+    public CharacterSkillData SkillData { get; protected set; }
 
     // 캐릭터의 상세 정보
+    [SerializeField] private CharacterStatScriptableObject _statSO;
     public ECharacterType CharacterType { get; private set; } = ECharacterType.None;
     public EWeaponType WeaponType { get; private set; } = EWeaponType.None;
     public bool IsPlayerTeam { get; private set; } = true;
 
-    // 오브젝트 ( 평타, 스킬 )
-    public GameObject NormalAttackObject { get; private set; }
-    public GameObject SkillObject { get; private set; }
-    public GameObject UltimateObject { get; private set; }
-
     // 기타
-    public Character Target { get; private set; }
     [HideInInspector]
-    public Vector2 _dir = Vector2.zero;
+    public Character Target;
     [HideInInspector]
-    public bool _isFacingLeft = true;
+    public Vector2 Direction = Vector2.zero;
+    public bool IsFacingLeft { get; private set; } = true;
+    public Transform MuzzleTransform;
+    [SerializeField] private bool _isAutoSetComponent = true;
 
     // 델리게이트
     public Action OnDeath;
     public Action OnDamaged;
     public Action OnRegenMana;
     public Action OnUseMana;
+    public Action OnUpdate;
+    public Action OnChangePassive;
+    public Action OnChangeSkill;
+    public Action OnChangeUltSkill;
+    //구현해야 할 것
+    public Action OnAttack;
+    public Action OnSkill;
+
 
     private void OnDisable()
     {
@@ -49,23 +53,13 @@ public class Character : MonoBehaviour
 
     private void Update()
     {
-        // temp Target
-        if(StateMachine != null && StateMachine.CurrentCharacterState != ECharacterState.Attack)
-        {
-            if(IsPlayerTeam) Target = BattleManager.Instance.GetEnemyCharacters(this)[0].Item2;
-            else Target = BattleManager.Instance.GetAllyCharacters(this)[0].Item2;
-        }
-        else Target = null;
-
-        // 스테이트 머신의 Update
-        if (StateMachine != null && StateMachine.currentState != null) StateMachine.Update();
-
-        // 공격 타이머
-        if (AttackAction != null) AttackAction.UpdateAttackTimer();
+        OnUpdate?.Invoke();
     }
 
     public void InitCharacter(bool isAlly)
     {
+        //AddOrGetComponent();
+
         // 컴포넌트
         Animator = GetComponentInChildren<Animator>();
 
@@ -73,16 +67,13 @@ public class Character : MonoBehaviour
         CharacterType = _statSO.CharacterType;
         WeaponType = _statSO.WeaponType;
 
-        // 오브젝트
-        NormalAttackObject = _statSO.NormalAttackObject;
-        SkillObject = _statSO.SkillObject;
-        UltimateObject = _statSO.UltimateObject;
-
         // 클래스
         Stats = new CharacterStat(this, _statSO);
         AnimationData = new CharacterAnimationData();
         StateMachine = new CharacterStateMachine(this);
-        SettingCharacterType(CharacterType);
+        //SettingCharacterType(CharacterType);
+        SearchingTarget = new CharacterSearchingTarget(this);
+        SkillData = new CharacterSkillData(this);
 
         // 레이어, 태그 설정
         SettingTeam(isAlly);
@@ -94,23 +85,40 @@ public class Character : MonoBehaviour
         StateMachine.ChanageState(StateMachine.moveState);
     }
 
-    private void SettingCharacterType(ECharacterType characterType)
-    {
-        switch (characterType)
-        {
-            case ECharacterType.Melee:
-                Movement = new MeleeMovement(this);
-                AttackAction = new MeleeAttackAction(this);
-                break;
-            case ECharacterType.Ranged:
-            case ECharacterType.Magician:
-                Movement = new RangedMovement(this);
-                AttackAction = new RangedAttackAction(this);
-                break;
-            default:
-                break;
-        }
-    }
+    //private void AddOrGetComponent()    // 컴포넌트 붙이기
+    //{
+    //    Collider = gameObject.GetOrAddComponent<BoxCollider2D>();
+
+
+    //    if (_isAutoSetComponent)
+    //    {
+
+    //    }
+    //    else
+    //    {
+
+    //    }
+
+
+    //}
+
+    //private void SettingCharacterType(ECharacterType characterType)
+    //{
+    //    switch (characterType)
+    //    {
+    //        case ECharacterType.Melee:
+    //            Movement = new MeleeMovement(this);
+    //            AttackAction = new MeleeAttackAction(this);
+    //            break;
+    //        case ECharacterType.Ranged:
+    //        case ECharacterType.Magician:
+    //            Movement = new RangedMovement(this);
+    //            AttackAction = new RangedAttackAction(this);
+    //            break;
+    //        default:
+    //            break;
+    //    }
+    //}
 
     private void SettingTeam(bool isPlayerTeam)
     {
@@ -130,28 +138,20 @@ public class Character : MonoBehaviour
 
     public void Flip()
     {
-        _isFacingLeft = !_isFacingLeft;
+        IsFacingLeft = !IsFacingLeft;
 
         Vector3 localScale = transform.localScale; // 현재 스케일의 x 값 반전
         localScale.x *= -1.0f; // 좌우 반전
         transform.localScale = localScale;
     }
 
-    public void SpawnAttackObject(EAttackObject attackObject, Vector3 pos)
+    public void SpawnAttackObject()
     {
-        switch (attackObject)
-        {
-            case EAttackObject.Normal:
-                Instantiate(NormalAttackObject, pos, Quaternion.identity).
-                    GetComponent<AttackObject>().Init(this);
-                break;
-            case EAttackObject.Skill:
-                break;
-            case EAttackObject.Ult:
-                break;
-            default:
-                break;
-        }
+        if (_statSO.BasicAttackFactorySO == null) return;
+
+
+        var objAndInterface = _statSO.BasicAttackFactory.Create(MuzzleTransform.position);
+        objAndInterface.Init(this);
     }
 
     private void Death()

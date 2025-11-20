@@ -1,13 +1,15 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class UIBase : MonoBehaviour
+public abstract class UIBase : MonoBehaviour
 {
-    public string UIName { get; protected set; }
+    public abstract IEnumerator Init();
+    public abstract void OnDisableFun();
 
 
-    public virtual IEnumerator Init()
+    private void OnEnable()
     {
-        yield return null;
+        OnDisableFun();
     }
 }

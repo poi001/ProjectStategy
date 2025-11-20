@@ -5,6 +5,7 @@ public class AnimationEvents : MonoBehaviour
 {
     private Character _character;
 
+
     private void Start()
     {
         _character = GetComponentInParent<Character>();

@@ -34,8 +34,7 @@ public class CharacterStatScriptableObject : ScriptableObject
     public float Drain;
     public float Range;
 
-    [Header("ETC Objects")]
-    public GameObject NormalAttackObject;
-    public GameObject SkillObject;
-    public GameObject UltimateObject;
+    [Header("Object Factory")]
+    public ScriptableObject BasicAttackFactorySO;
+    public IAttackObjectFactory BasicAttackFactory => BasicAttackFactorySO as IAttackObjectFactory;
 }

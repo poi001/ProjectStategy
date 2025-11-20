@@ -39,13 +39,13 @@ public class AttackState : CharacterBaseState
     {
         // 플레이어가 적보다 오른쪽에 있을 때 반전
         if (stateMachine.Character.transform.position.x > stateMachine.Character.Target.transform.position.x &&
-            !stateMachine.Character._isFacingLeft)
+            !stateMachine.Character.IsFacingLeft)
         {
             stateMachine.Character.Flip(); // 스케일을 반전
         }
         // 플레이어가 적보다 왼쪽에 있을 때 반전
         else if (stateMachine.Character.transform.position.x < stateMachine.Character.Target.transform.position.x &&
-            stateMachine.Character._isFacingLeft)
+            stateMachine.Character.IsFacingLeft)
         {
             stateMachine.Character.Flip(); // 스케일을 반전
         }

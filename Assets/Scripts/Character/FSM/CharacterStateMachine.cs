@@ -22,5 +22,7 @@ public class CharacterStateMachine : BaseStateMachine
         skillState = new SkillState(this);
         stunState = new StunState(this);
         deathState = new DeathState(this);
+
+        Character.OnUpdate += Update;
     }
 }

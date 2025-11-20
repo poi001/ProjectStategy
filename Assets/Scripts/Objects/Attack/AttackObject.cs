@@ -1,12 +1,11 @@
 using UnityEngine;
 
 
-public abstract class AttackObject : MonoBehaviour
+public abstract class AttackObject : MonoBehaviour, IAttackObject
 {
     protected SpriteRenderer sprite;
     public Character Owner { get; private set; }
     public float Damage { get; private set; }
-    public float Speed;
 
     protected string enemyTag;
     protected string allyTag;
@@ -22,11 +21,10 @@ public abstract class AttackObject : MonoBehaviour
 
     }
 
-    public virtual void Init(Character owner, float speed = -1.0f)
+    public virtual void Init(Character owner)
     {
         Owner = owner;
         Damage = owner.Stats.AttackDamage;
-        Speed = speed < 0.0f ? Speed : speed;
 
         if (owner.IsPlayerTeam)
         {

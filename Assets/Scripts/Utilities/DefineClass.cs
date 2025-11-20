@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEngine;
 
 public interface IManagerInterface
 {
@@ -11,6 +12,14 @@ public interface IManagerWithSceneInterface
 public interface IAttackAction
 {
     public void Attack();
+}
+public interface IAttackObjectFactory
+{
+    public IAttackObject Create(Vector3 pos);
+}
+public interface IAttackObject
+{
+    public void Init(Character owner);
 }
 public interface IMoveAction
 {
@@ -33,6 +42,7 @@ public interface IBuff
 public enum EGameState
 {
     None = 0,
+    Load,
     Bootstrap,
     Title,
     Lobby,
@@ -101,6 +111,13 @@ public enum EAttackObject
     Skill,
     Ult
 }
+public enum ECombatType
+{
+    Aggressive,   // 근거리 돌진형
+    Balanced,     // 중거리 밸런스형
+    Defensive,    // 거리 유지형 (원거리)
+    Supportive    // 아군 근처 유지형
+}
 
 
 public class DefineClass
@@ -153,6 +170,7 @@ public class DefineClass
 
     // UI Canvas 이름
     public const string UI_HPMPBarUICanvas = "HPMPBarUICanvas";
+    public const string UI_LobbyUICanvas = "LobbyUICanvas";
 
     // Resources 경로
     public const string Path_UICanvas = "Prefabs/UI/Canvas";
