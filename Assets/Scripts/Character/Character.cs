@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 
 public class Character : MonoBehaviour
@@ -20,6 +21,7 @@ public class Character : MonoBehaviour
     [SerializeField] private CharacterStatScriptableObject _statSO;
     public ECharacterType CharacterType { get; private set; } = ECharacterType.None;
     public EWeaponType WeaponType { get; private set; } = EWeaponType.None;
+    public ECombatType CombatType { get; private set; } = ECombatType.Balanced;
     public bool IsPlayerTeam { get; private set; } = true;
 
     // 기타
@@ -44,11 +46,19 @@ public class Character : MonoBehaviour
     public Action OnAttack;
     public Action OnSkill;
 
-
     private void OnDisable()
     {
         OnDeath = null;
         OnDamaged = null;
+        OnRegenMana = null;
+        OnUseMana = null;
+        OnUpdate = null;
+        OnChangePassive = null;
+        OnChangeSkill = null;
+        OnChangeUltSkill = null;
+
+        OnAttack = null;
+        OnSkill = null;
     }
 
     private void Update()
@@ -58,20 +68,19 @@ public class Character : MonoBehaviour
 
     public void InitCharacter(bool isAlly)
     {
-        //AddOrGetComponent();
-
         // 컴포넌트
         Animator = GetComponentInChildren<Animator>();
 
         // 타입
         CharacterType = _statSO.CharacterType;
         WeaponType = _statSO.WeaponType;
+        //CombatType = PlayerDataScriptableObject.Instance.
 
         // 클래스
-        Stats = new CharacterStat(this, _statSO);
+        //Stats = new CharacterStat(this, _statSO);
         AnimationData = new CharacterAnimationData();
         StateMachine = new CharacterStateMachine(this);
-        //SettingCharacterType(CharacterType);
+        AttackAction = new CharacterAttackAction(this);
         SearchingTarget = new CharacterSearchingTarget(this);
         SkillData = new CharacterSkillData(this);
 
@@ -84,41 +93,6 @@ public class Character : MonoBehaviour
         // 처음 상태 설정
         StateMachine.ChanageState(StateMachine.moveState);
     }
-
-    //private void AddOrGetComponent()    // 컴포넌트 붙이기
-    //{
-    //    Collider = gameObject.GetOrAddComponent<BoxCollider2D>();
-
-
-    //    if (_isAutoSetComponent)
-    //    {
-
-    //    }
-    //    else
-    //    {
-
-    //    }
-
-
-    //}
-
-    //private void SettingCharacterType(ECharacterType characterType)
-    //{
-    //    switch (characterType)
-    //    {
-    //        case ECharacterType.Melee:
-    //            Movement = new MeleeMovement(this);
-    //            AttackAction = new MeleeAttackAction(this);
-    //            break;
-    //        case ECharacterType.Ranged:
-    //        case ECharacterType.Magician:
-    //            Movement = new RangedMovement(this);
-    //            AttackAction = new RangedAttackAction(this);
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //}
 
     private void SettingTeam(bool isPlayerTeam)
     {

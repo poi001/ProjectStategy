@@ -92,8 +92,7 @@ public enum ECharacterType
     None = 0,
     Melee,
     Ranged,
-    Magician,
-    Healer
+    Magician
 }
 public enum EWeaponType
 {
@@ -113,10 +112,23 @@ public enum EAttackObject
 }
 public enum ECombatType
 {
-    Aggressive,   // 근거리 돌진형
-    Balanced,     // 중거리 밸런스형
-    Defensive,    // 거리 유지형 (원거리)
-    Supportive    // 아군 근처 유지형
+    Balanced = 0,   // 중거리 밸런스형
+    Aggressive,     // 근거리 돌진형
+    Defensive,      // 거리 유지형 (원거리)
+    Supportive      // 아군 근처 유지형
+}
+public enum EBuffType
+{
+    //Normal = 0,
+    //Skill,
+    //Ult
+}
+public enum EDebuffType
+{
+    Slow = 0,
+    Stun,
+    Blind,
+    Silence
 }
 
 

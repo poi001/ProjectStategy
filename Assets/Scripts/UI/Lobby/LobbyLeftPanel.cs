@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,41 +13,38 @@ public class LobbyLeftPanel : MonoBehaviour
     private Color _selectedColor = Color.yellow;
     private Color _normalColor = Color.white;
 
+    private LobbyUICanvas _lobbyUICanvas;
+
+
+    private void Awake()
+    {
+        _lobbyUICanvas = GetComponentInParent<LobbyUICanvas>();
+    }
 
     public void OnGameButton()
     {
         SelectedButton(_gameButton);
-
-        if (UIManager.Instance.Dict_UI[DefineClass.UI_LobbyUICanvas].TryGetComponent<LobbyUICanvas>(out LobbyUICanvas ui))
-            ui.OnPushGameButton?.Invoke();
+        _lobbyUICanvas?.OnPushGameButton?.Invoke();
     }
     public void OnTeamSettingButton()
     {
         SelectedButton(_teamSettingButton);
-
-        if (UIManager.Instance.Dict_UI[DefineClass.UI_LobbyUICanvas].TryGetComponent<LobbyUICanvas>(out LobbyUICanvas ui))
-            ui.OnPushTeamSettingButton?.Invoke();
+        _lobbyUICanvas?.OnPushTeamSettingButton?.Invoke();
     }
     public void OnQuestButton()
     {
         SelectedButton(_questButton);
-
-        if (UIManager.Instance.Dict_UI[DefineClass.UI_LobbyUICanvas].TryGetComponent<LobbyUICanvas>(out LobbyUICanvas ui))
-            ui.OnPushQuestButton?.Invoke();
+        _lobbyUICanvas?.OnPushQuestButton?.Invoke();
     }
     public void OnStoreButton()
     {
         SelectedButton(_storeButton);
-
-        if (UIManager.Instance.Dict_UI[DefineClass.UI_LobbyUICanvas].TryGetComponent<LobbyUICanvas>(out LobbyUICanvas ui))
-            ui.OnPushStoreButton?.Invoke();
+        _lobbyUICanvas?.OnPushStoreButton?.Invoke();
     }
     public void OnOptionButton()
     {
         SelectedButton(_optionButton);
-
-        if (UIManager.Instance.Dict_UI[DefineClass.UI_LobbyUICanvas].TryGetComponent<LobbyUICanvas>(out LobbyUICanvas ui))
-            ui.OnPushOptionButton?.Invoke();
+        _lobbyUICanvas?.OnPushOptionButton?.Invoke();
     }
 
     private void SelectedButton(Button btn)

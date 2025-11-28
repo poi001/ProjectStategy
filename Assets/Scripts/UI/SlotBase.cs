@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SlotBase : MonoBehaviour
+public class SlotBase : ButtonBase
 {
     [SerializeField] protected Image icon;
 

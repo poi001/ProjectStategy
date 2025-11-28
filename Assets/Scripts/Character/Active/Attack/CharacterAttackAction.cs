@@ -16,19 +16,17 @@ public class CharacterAttackAction : IAttackAction
 
     private void CreateAttackAction(ECharacterType type)
     {
-        switch (type)
-        {
-            case ECharacterType.Melee:
-                break;
-            case ECharacterType.Ranged:
-                break;
-            case ECharacterType.Magician:
-                break;
-            case ECharacterType.Healer:
-                break;
-            default:
-                break;
-        }
+        //switch (type)
+        //{
+        //    case ECharacterType.Melee:
+        //        break;
+        //    case ECharacterType.Ranged:
+        //        break;
+        //    case ECharacterType.Healer:
+        //        break;
+        //    default:
+        //        break;
+        //}
     }
 
     public void UpdateAttackTimer()

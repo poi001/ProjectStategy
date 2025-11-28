@@ -11,9 +11,17 @@ public class PlayerDataScriptableObject : ScriptableObjectSingleton<PlayerDataSc
     //public float ;
     //public float Gold;
 
+    // 캐릭터
     [HideInInspector]
     public GameObject[] Memebers = new GameObject[DefineClass.NumberOfPlayers];
-    // temp
     [HideInInspector]
     public GameObject[] EnemyMemebers = new GameObject[DefineClass.NumberOfPlayers];
+
+    // 전투 타입
+    [HideInInspector]
+    public GameObject[] MemebersCombatType = new GameObject[DefineClass.NumberOfPlayers];
+    [HideInInspector]
+    public GameObject[] EnemyMemebersCombatType = new GameObject[DefineClass.NumberOfPlayers];
+
+    // 아이템
 }

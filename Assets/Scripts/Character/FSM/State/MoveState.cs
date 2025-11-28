@@ -48,6 +48,6 @@ public class MoveState : CharacterBaseState
             return;
         }
         
-        stateMachine.Character.Movement.UpdateMovement();
+        stateMachine.Character?.Movement?.UpdateMovement();
     }
 }

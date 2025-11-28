@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LobbyUICanvas : UIBase
@@ -14,7 +13,7 @@ public class LobbyUICanvas : UIBase
     // Bottom Panel
     [SerializeField] private LobbyBottomPanel _lobbyBottomPanel;
 
-    // µ¨¸®°ÔÀÌÆ®
+    // µ¨¸®°ÔÀÌÆ® ( ¿ÞÂÊ )
     public Action OnPushGameButton;
     public Action OnPushTeamSettingButton;
     public Action OnPushQuestButton;
@@ -24,7 +23,8 @@ public class LobbyUICanvas : UIBase
 
     public override IEnumerator Init()
     {
-        EventBus.Register(EGameState.Lobby, EventBusRegistDelegate);
+        EventBus.Register(EGameState.Lobby, EventBusRegistDelegate_ShowUI);
+        EventBus.Register(EGameState.Battle, EventBusRegistDelegate_HideUI);
         InitDelegate();
 
         yield return new WaitUntil(() => OnPushGameButton != null);
@@ -43,9 +43,13 @@ public class LobbyUICanvas : UIBase
         //OnPushOptionButton = null;
     }
 
-    private void EventBusRegistDelegate()
+    private void EventBusRegistDelegate_ShowUI()
     {
         UIManager.Instance.ShowUI(DefineClass.UI_LobbyUICanvas);
+    }
+    private void EventBusRegistDelegate_HideUI()
+    {
+        UIManager.Instance.HideUI(DefineClass.UI_LobbyUICanvas);
     }
 
     private void InitDelegate()
