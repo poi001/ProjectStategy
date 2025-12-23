@@ -24,7 +24,6 @@ public class LobbyUICanvas : UIBase
     public override IEnumerator Init()
     {
         EventBus.Register(EGameState.Lobby, EventBusRegistDelegate_ShowUI);
-        EventBus.Register(EGameState.Battle, EventBusRegistDelegate_HideUI);
         InitDelegate();
 
         yield return new WaitUntil(() => OnPushGameButton != null);
@@ -36,20 +35,12 @@ public class LobbyUICanvas : UIBase
 
     public override void OnDisableFun()
     {
-        //OnPushGameButton = null;
-        //OnPushTeamSettingButton = null;
-        //OnPushQuestButton = null;
-        //OnPushStoreButton = null;
-        //OnPushOptionButton = null;
+
     }
 
     private void EventBusRegistDelegate_ShowUI()
     {
         UIManager.Instance.ShowUI(DefineClass.UI_LobbyUICanvas);
-    }
-    private void EventBusRegistDelegate_HideUI()
-    {
-        UIManager.Instance.HideUI(DefineClass.UI_LobbyUICanvas);
     }
 
     private void InitDelegate()

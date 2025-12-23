@@ -25,6 +25,12 @@ public class StartBtn : ButtonBase
 
         PlayerDataScriptableObject.Instance.Memebers = _member.ToArray();
         PlayerDataScriptableObject.Instance.EnemyMemebers = _enemy.ToArray();
+
+        for (int i = 0; i < DefineClass.NumberOfPlayers; i++)
+            PlayerDataScriptableObject.Instance.MemebersCombatType[i] = ECombatType.Balanced;
+        for (int i = 0; i < DefineClass.NumberOfPlayers; i++)
+            PlayerDataScriptableObject.Instance.EnemyMemebersCombatType[i] = ECombatType.Balanced;
+
         LoadManager.Instance.ChangeGameState(EGameState.Battle);
     }
 }

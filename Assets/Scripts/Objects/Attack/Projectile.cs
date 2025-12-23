@@ -13,7 +13,7 @@ public class Projectile : AttackObject
 
         if (collision.CompareTag(enemyTag))
         {
-            collision.GetComponent<Character>().Stats.StatHandler.TakeDamage(Damage);
+            collision.GetComponent<Character>().Stats.StatHandler.TakeDamage(Damage, Owner.Stats);
             Destroy(gameObject);
         }
     }

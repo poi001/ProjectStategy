@@ -1,33 +1,18 @@
 using UnityEngine;
 
-public class CharacterAttackAction : IAttackAction
+public abstract class CharacterAttackAction : IAttackAction
 {
     protected Character _character;
     private float _attackTimer = 0.0f;
-    private float _regenManaValue = 5.0f;
 
 
     public CharacterAttackAction(Character character)
     {
         _character = character;
-        CreateAttackAction(character.CharacterType);
         _character.OnUpdate += UpdateAttackTimer;
     }
 
-    private void CreateAttackAction(ECharacterType type)
-    {
-        //switch (type)
-        //{
-        //    case ECharacterType.Melee:
-        //        break;
-        //    case ECharacterType.Ranged:
-        //        break;
-        //    case ECharacterType.Healer:
-        //        break;
-        //    default:
-        //        break;
-        //}
-    }
+    protected abstract void WhenAttackAction(Character target);
 
     public void UpdateAttackTimer()
     {
@@ -46,9 +31,19 @@ public class CharacterAttackAction : IAttackAction
         return false;
     }
 
-    public virtual void Attack()
+    public void Attack()
     {
-        _character.Stats.StatHandler.RegenMana(_regenManaValue);
+        Character target = _character.Target;
+
+        if (target != null)
+        {
+            if (!(target.CompareTag(DefineClass.Tag_DeadPlayer) || target.CompareTag(DefineClass.Tag_DeadEnemy)))
+            {
+                WhenAttackAction(target);
+                _character.OnAttack?.Invoke();
+            }
+        }
+
     }
 
     public virtual void UseSkill()

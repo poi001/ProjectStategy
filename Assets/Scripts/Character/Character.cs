@@ -19,7 +19,7 @@ public class Character : MonoBehaviour
 
     // 캐릭터의 상세 정보
     [SerializeField] private CharacterStatScriptableObject _statSO;
-    public ECharacterType CharacterType { get; private set; } = ECharacterType.None;
+    public ECharacterType CharacterType { get; private set; } = ECharacterType.Melee;
     public EWeaponType WeaponType { get; private set; } = EWeaponType.None;
     public ECombatType CombatType { get; private set; } = ECombatType.Balanced;
     public bool IsPlayerTeam { get; private set; } = true;
@@ -66,7 +66,7 @@ public class Character : MonoBehaviour
         OnUpdate?.Invoke();
     }
 
-    public void InitCharacter(bool isAlly)
+    public void InitCharacter(bool isAlly, int num)
     {
         // 컴포넌트
         Animator = GetComponentInChildren<Animator>();
@@ -74,13 +74,14 @@ public class Character : MonoBehaviour
         // 타입
         CharacterType = _statSO.CharacterType;
         WeaponType = _statSO.WeaponType;
-        //CombatType = PlayerDataScriptableObject.Instance.
+        CombatType = isAlly ? PlayerDataScriptableObject.Instance.MemebersCombatType[num] :
+            PlayerDataScriptableObject.Instance.EnemyMemebersCombatType[num];
 
         // 클래스
-        //Stats = new CharacterStat(this, _statSO);
+        CharacterTypeSetting();
+        Stats = new CharacterStat(this, _statSO);
         AnimationData = new CharacterAnimationData();
         StateMachine = new CharacterStateMachine(this);
-        AttackAction = new CharacterAttackAction(this);
         SearchingTarget = new CharacterSearchingTarget(this);
         SkillData = new CharacterSkillData(this);
 
@@ -92,6 +93,27 @@ public class Character : MonoBehaviour
 
         // 처음 상태 설정
         StateMachine.ChanageState(StateMachine.moveState);
+    }
+
+    private void CharacterTypeSetting()
+    {
+        switch (CharacterType)
+        {
+            case ECharacterType.Melee:
+                Movement = new AggressiveMovement(this);
+                AttackAction = new MeleeAttackAction(this);
+                break;
+            case ECharacterType.Ranged:
+                Movement = new DefensiveMovement(this);
+                AttackAction = new RangedAttackAction(this);
+                break;
+            case ECharacterType.Magician:
+                Movement = new BalancedMovement(this);
+                AttackAction = new RangedAttackAction(this);
+                break;
+            default:
+                break;
+        }
     }
 
     private void SettingTeam(bool isPlayerTeam)
@@ -119,12 +141,27 @@ public class Character : MonoBehaviour
         transform.localScale = localScale;
     }
 
-    public void SpawnAttackObject()
+    public void SpawnAttackObject(EAttackType type)
     {
         if (_statSO.BasicAttackFactorySO == null) return;
 
+        IAttackObject objAndInterface = null;
 
-        var objAndInterface = _statSO.BasicAttackFactory.Create(MuzzleTransform.position);
+        switch (type)
+        {
+            case EAttackType.BasicAttack:
+                objAndInterface = _statSO.BasicAttackFactory.Create(EAttackType.BasicAttack, MuzzleTransform.position);
+                break;
+            case EAttackType.Passive:
+                objAndInterface = _statSO.BasicAttackFactory.Create(EAttackType.Passive, MuzzleTransform.position);
+                break;
+            case EAttackType.Skill:
+                objAndInterface = _statSO.BasicAttackFactory.Create(EAttackType.Skill, MuzzleTransform.position);
+                break;
+            default:
+                break;
+        }
+
         objAndInterface.Init(this);
     }
 

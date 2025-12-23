@@ -15,7 +15,7 @@ public interface IAttackAction
 }
 public interface IAttackObjectFactory
 {
-    public IAttackObject Create(Vector3 pos);
+    public IAttackObject Create(EAttackType type, Vector3 pos);
 }
 public interface IAttackObject
 {
@@ -77,9 +77,13 @@ public enum ECharacterStatType
     CriticalDamage,
     MoveSpeed,
     Stamina,
-    IncreasedDamage,
     Drain,
-    Range
+    Range,
+    RegenHPWhenHitting,
+    RegenMPWhenHitting,
+    ExtraDamageWhenHitting_AD,
+    ExtraDamageWhenHitting_AP,
+    IncreaseShieldQuantity
 }
 public enum EStatApplyType
 {
@@ -89,8 +93,7 @@ public enum EStatApplyType
 }
 public enum ECharacterType
 {
-    None = 0,
-    Melee,
+    Melee = 0,
     Ranged,
     Magician
 }
@@ -104,11 +107,11 @@ public enum EWeaponType
     Bow,
     Staff
 }
-public enum EAttackObject
+public enum EAttackType
 {
-    Normal = 0,
-    Skill,
-    Ult
+    BasicAttack = 0,
+    Passive,
+    Skill
 }
 public enum ECombatType
 {
@@ -117,18 +120,18 @@ public enum ECombatType
     Defensive,      // 거리 유지형 (원거리)
     Supportive      // 아군 근처 유지형
 }
-public enum EBuffType
-{
-    //Normal = 0,
-    //Skill,
-    //Ult
-}
 public enum EDebuffType
 {
     Slow = 0,
     Stun,
     Blind,
     Silence
+}
+public enum EDamageType
+{
+    AD = 0,
+    AP,
+    True
 }
 
 

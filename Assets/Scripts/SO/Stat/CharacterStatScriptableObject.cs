@@ -30,9 +30,17 @@ public class CharacterStatScriptableObject : ScriptableObject
     public float CriticalDamage;
     public float MoveSpeed;
     public float Stamina;
-    public float IncreasedDamage;
     public float Drain;
     public float Range;
+
+    [Header("Battle StatsExtra(Special Stats)")]
+    public float RegenHPWhenHitting = 0.0f;             // 타격당 체력회복
+    public float RegenMPWhenHitting = 5.0f;             // 타격당 마나회복
+    public float ExtraDamageWhenHitting_AD = 0.0f;      // 타격당 AD피해
+    public float ExtraDamageWhenHitting_AP = 0.0f;      // 타격당 AP피해
+    public float IncreaseShieldQuantity = 1.0f;         // 추가 쉴드( % )
+
+
 
     [Header("Object Factory")]
     public ScriptableObject BasicAttackFactorySO;

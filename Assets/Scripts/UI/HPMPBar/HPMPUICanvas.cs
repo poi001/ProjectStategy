@@ -1,13 +1,30 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HPMPUICanvas : MonoBehaviour
+public class HPMPUICanvas : UIBase
 {
     [SerializeField]
     private GameObject AllyHPMPBarObject;
     [SerializeField]
     private GameObject EnemyHPMPBarObject;
 
+    public override IEnumerator Init()
+    {
+        EventBus.Register(EGameState.Battle, EventBusRegistDelegate_ShowUI);
+
+        yield return new WaitUntil(() => EventBus.Events[EGameState.Battle] != null);
+    }
+
+    public override void OnDisableFun()
+    {
+
+    }
+
+    private void EventBusRegistDelegate_ShowUI()
+    {
+        UIManager.Instance.ShowUI(DefineClass.UI_HPMPBarUICanvas);
+    }
 
     public void SpawnAllyHPMPBarUI((GameObject, Character)[] characters)
     {

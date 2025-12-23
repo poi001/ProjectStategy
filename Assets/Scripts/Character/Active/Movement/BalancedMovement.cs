@@ -1,16 +1,12 @@
 using UnityEngine;
 
-public class BalancedMovement : MonoBehaviour
+public class BalancedMovement : CharacterMovement
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public BalancedMovement(Character character) : base(character)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        ChaseCoefficient = 1.0f;
+        SeparationCoefficient = 0.7f;
+        WallAvoidCoefficient = 1.2f;
+        RangeCoefficient = 0.95f;
     }
 }

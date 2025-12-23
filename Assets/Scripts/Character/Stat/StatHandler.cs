@@ -1,13 +1,24 @@
 using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.TextCore.Text;
 
 public class StatHandler
 {
     private Character _character;
     private CharacterStat _stat;
 
-    public float CurrentHP { get; private set; }
-    public float CurrentMP { get; private set; }
+    private float _currentHP;
+    private float _currentMP;
+
+    public float CurrentHP
+    {
+        get { return _currentHP; }
+        set { _currentHP = value > _stat.MaxHP ? _stat.MaxHP : value; }
+    }
+    public float CurrentMP
+    {
+        get { return _currentMP; }
+        set { _currentMP = value > _stat.MaxMP ? _stat.MaxMP : value; }
+    }
 
 
     public StatHandler(Character character, CharacterStat stat)
@@ -17,15 +28,14 @@ public class StatHandler
 
         CurrentHP = _stat.MaxHP;
         CurrentMP = 0.0f;
+
+        _character.OnAttack += RegenMana;
     }
 
     // 캐릭터 체력, 마나 관련
-    public float TakeDamage(float damage, bool isAD = true)
+    public float TakeDamage(float damage, CharacterStat stat, EDamageType damageType = EDamageType.AD)
     {
-        ECharacterStatType damageType = isAD ? ECharacterStatType.AttackDamage : ECharacterStatType.AbilityPower;
-        DamageModifer damageModifer = new DamageModifer(_stat, damageType);
-
-        CurrentHP -= damageModifer.Damage();
+        CurrentHP -= CalcDamage(damage, damageType, stat);
 
         if (CurrentHP <= 0.0f)
         {
@@ -38,6 +48,14 @@ public class StatHandler
         return CurrentHP;
     }
     public void RegenMana(float value)
+    {
+        RegenMana_Func(value);
+    }
+    public void RegenMana()
+    {
+        RegenMana_Func(_stat.RegenMPWhenHitting);
+    }
+    private void RegenMana_Func(float value)
     {
         CurrentMP += value;
 
@@ -76,6 +94,34 @@ public class StatHandler
             _stat._statDict[statType].RemoveModifier(modifier);
         else
             CoroutineManager.Instance.StopManagedCoroutine(key);
+    }
+
+    // 대미지 계산
+    private float CalcDamage(float damage, EDamageType damageType, CharacterStat stat)
+    {
+        float resistance = 0.0f;
+        float penetration_Flat = 0.0f;
+        float penetration_Percent = 0.0f;
+
+        switch (damageType)
+        {
+            case EDamageType.AD:
+                resistance = _stat.Armor;
+                penetration_Flat = stat.ArmorPenetration_Flat;
+                penetration_Percent = stat.ArmorPenetration_Percent;
+                break;
+            case EDamageType.AP:
+                resistance = _stat.MagicResistance;
+                penetration_Flat = stat.MagicResistancePenetration_Flat;
+                penetration_Percent = stat.MagicResistancePenetration_Percent;
+                break;
+            default:
+                break;
+        }
+
+        float finalArmor = resistance * (1.0f - penetration_Percent * 0.01f) - penetration_Flat;
+
+        return damage * (1.0f / (1.0f + (finalArmor * 0.01f)));
     }
 
     // 코루틴

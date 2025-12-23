@@ -7,18 +7,8 @@ public class MeleeAttackAction : CharacterAttackAction
         _character = character;
     }
 
-    public override void Attack()
+    protected override void WhenAttackAction(Character target)
     {
-        base.Attack();
-
-        Character target = _character.Target;
-
-        if (target != null)
-        {
-            if (!(target.CompareTag(DefineClass.Tag_DeadPlayer) || target.CompareTag(DefineClass.Tag_DeadEnemy)))
-            {
-                _character.Target.Stats.StatHandler.TakeDamage(_character.Stats.AttackDamage);
-            }
-        }
+        target.Stats.StatHandler.TakeDamage(_character.Stats.AttackDamage, _character.Stats);
     }
 }

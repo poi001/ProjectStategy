@@ -11,7 +11,7 @@ public class CharacterStat
     // StatHandler
     public StatHandler StatHandler { get; private set; }
 
-    // Battle Stats
+    // Battle Stats ( Private )
     private Stat _maxHP;
     private Stat _maxMP;
     private Stat _armor;
@@ -27,10 +27,17 @@ public class CharacterStat
     private Stat _criticalDamage;
     private Stat _moveSpeed;
     private Stat _stamina;
-    private Stat _increasedDamage;
     private Stat _drain;
     private Stat _range;
 
+    // Special Stats ( Private )
+    private Stat _regenHPWhenHitting;
+    private Stat _regenMPWhenHitting;
+    private Stat _extraDamageWhenHitting_AD;
+    private Stat _extraDamageWhenHitting_AP;
+    private Stat _increaseShieldQuantity;
+
+    // Battle Stats ( Public )
     public float MaxHP => _maxHP.FinalValue;
     public float MaxMP => _maxMP.FinalValue;
     public float Armor => _armor.FinalValue;
@@ -46,10 +53,15 @@ public class CharacterStat
     public float CriticalDamage => _criticalDamage.FinalValue;
     public float MoveSpeed => _moveSpeed.FinalValue;
     public float Stamina => _stamina.FinalValue;
-    public float IncreasedDamage => _increasedDamage.FinalValue;
     public float Drain => _drain.FinalValue;
     public float Range => _range.FinalValue;
 
+    // Special Stats ( Public )
+    public float RegenHPWhenHitting => _regenHPWhenHitting.FinalValue;
+    public float RegenMPWhenHitting => _regenMPWhenHitting.FinalValue;
+    public float ExtraDamageWhenHitting_AD => _extraDamageWhenHitting_AD.FinalValue;
+    public float ExtraDamageWhenHitting_AP => _extraDamageWhenHitting_AP.FinalValue;
+    public float IncreaseShieldQuantity => _increaseShieldQuantity.FinalValue;
 
 
     // ETC Stats
@@ -86,13 +98,19 @@ public class CharacterStat
         _statDict.Add(ECharacterStatType.AttackSpeed, _attackSpeed = new Stat(so.AttackSpeed));
         _statDict.Add(ECharacterStatType.CriticalProbability, _criticalProbability = new Stat(so.CriticalProbability));
         _statDict.Add(ECharacterStatType.CriticalDamage, _criticalDamage = new Stat(so.CriticalDamage));
-        _statDict.Add(ECharacterStatType.IncreasedDamage, _increasedDamage = new Stat(so.IncreasedDamage));
         _statDict.Add(ECharacterStatType.Range, _range = new Stat(so.Range));
 
         // 유틸리티
         _statDict.Add(ECharacterStatType.MoveSpeed, _moveSpeed = new Stat(so.MoveSpeed));
         _statDict.Add(ECharacterStatType.Stamina, _stamina = new Stat(so.Stamina));
         _statDict.Add(ECharacterStatType.Drain, _drain = new Stat(so.Drain));
+
+        // 추가 스탯
+        _statDict.Add(ECharacterStatType.RegenHPWhenHitting, _regenHPWhenHitting = new Stat(so.RegenMPWhenHitting));
+        _statDict.Add(ECharacterStatType.RegenMPWhenHitting, _regenMPWhenHitting = new Stat(so.RegenMPWhenHitting));
+        _statDict.Add(ECharacterStatType.ExtraDamageWhenHitting_AD, _extraDamageWhenHitting_AD = new Stat(so.ExtraDamageWhenHitting_AD));
+        _statDict.Add(ECharacterStatType.ExtraDamageWhenHitting_AP, _extraDamageWhenHitting_AP = new Stat(so.ExtraDamageWhenHitting_AP));
+        _statDict.Add(ECharacterStatType.IncreaseShieldQuantity, _increaseShieldQuantity = new Stat(so.IncreaseShieldQuantity));
 
         this.StatHandler = new StatHandler(character, this);
     }

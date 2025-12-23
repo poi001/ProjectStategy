@@ -5,7 +5,8 @@ public class CharacterSearchingTarget
 {
     private Character _character;
     private Action _findTargtFunc;
-    private float _timer = 1.0f;
+    private float _timer = 0.0f;
+    private float _searchInterval = 0.35f;
 
 
     public CharacterSearchingTarget(Character character)
@@ -24,7 +25,7 @@ public class CharacterSearchingTarget
 
     private void UpdateFindTarget()
     {
-        if(_timer < 0.3f)
+        if(_timer < _searchInterval)
         {
             _timer += Time.deltaTime;
         }
@@ -39,5 +40,20 @@ public class CharacterSearchingTarget
     {
         if (_character.IsPlayerTeam) _character.Target = BattleManager.Instance.GetEnemyCharacters(_character)[0].Item2;
         else _character.Target = BattleManager.Instance.GetAllyCharacters(_character)[0].Item2;
+    }
+
+    private void OnTargetDead()
+    {
+        //FindTarget();
+    }
+
+    private void OnTauntedByEnemy()
+    {
+        //currentTarget = taunter;
+    }
+
+    private void OnTargetOutOfRange()
+    {
+        //FindTarget();
     }
 }

@@ -19,9 +19,9 @@ public class PlayerDataScriptableObject : ScriptableObjectSingleton<PlayerDataSc
 
     // 전투 타입
     [HideInInspector]
-    public GameObject[] MemebersCombatType = new GameObject[DefineClass.NumberOfPlayers];
+    public ECombatType[] MemebersCombatType = new ECombatType[DefineClass.NumberOfPlayers];
     [HideInInspector]
-    public GameObject[] EnemyMemebersCombatType = new GameObject[DefineClass.NumberOfPlayers];
+    public ECombatType[] EnemyMemebersCombatType = new ECombatType[DefineClass.NumberOfPlayers];
 
     // 아이템
 }

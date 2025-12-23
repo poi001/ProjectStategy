@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df1d9d4b78fcd05418c5548ad43a78e3, type: 3}
   m_Name: ArrowFactoryScriptableObject
   m_EditorClassIdentifier: 
-  arrowPrefab: {fileID: 6410446256651421753, guid: ef303e3b185d80c4186dbb90afadaf4c, type: 3}
+  AttackObjectPrefab: {fileID: 6410446256651421753, guid: ef303e3b185d80c4186dbb90afadaf4c, type: 3}

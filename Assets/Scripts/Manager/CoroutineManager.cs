@@ -9,7 +9,8 @@ public class CoroutineManager : SingletonWithMono<CoroutineManager>, IManagerInt
 
     public IEnumerator Init()
     {
-        yield return new WaitForSeconds(0.15f); // ← 가짜 로딩 ( 너무 로딩이 빠르면 어색하기 때문, 나중에 비동기 메서드로 교체 )
+        yield return null;
+        //yield return new WaitForSeconds(0.15f); // ← 가짜 로딩 ( 너무 로딩이 빠르면 어색하기 때문, 나중에 비동기 메서드로 교체 )
     }
 
     public Coroutine StartManagedCoroutine(IEnumerator routine, string key = null)

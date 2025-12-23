@@ -7,11 +7,9 @@ public class RangedAttackAction : CharacterAttackAction
         _character = character;
     }
 
-    public override void Attack()
+    protected override void WhenAttackAction(Character target)
     {
-        base.Attack();
-
-        _character.SpawnAttackObject();
+        _character.SpawnAttackObject(EAttackType.BasicAttack);
     }
 
     public override void UseSkill()

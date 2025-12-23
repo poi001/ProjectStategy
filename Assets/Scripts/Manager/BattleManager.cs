@@ -49,8 +49,10 @@ public class BattleManager : SingletonWithScene<BattleManager>, IManagerWithScen
 
     private IEnumerator InitCharacters()
     {
-        foreach (var playerCharacters in _playerCharacters) playerCharacters.Item2.InitCharacter(true);
-        foreach (var enemyCharacters in _enemyCharacters) enemyCharacters.Item2.InitCharacter(false);
+        for (int i = 0; i < DefineClass.NumberOfPlayers; i++)
+            _playerCharacters[i].Item2.InitCharacter(true, i);
+        for (int i = 0; i < DefineClass.NumberOfPlayers; i++)
+            _enemyCharacters[i].Item2.InitCharacter(false, i);
 
         yield return null;
     }

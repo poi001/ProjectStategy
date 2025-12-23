@@ -17,8 +17,6 @@ public class LobbyBottomPanel : MonoBehaviour
         _questPanel.SetActive(false);
         _storePanel.SetActive(false);
         _optionPanel.SetActive(false);
-
-        Debug.Log("ChangeGameImage");
     }
 
     public void ChangeTeamSettingImage()
@@ -28,8 +26,6 @@ public class LobbyBottomPanel : MonoBehaviour
         _questPanel.SetActive(false);
         _storePanel.SetActive(false);
         _optionPanel.SetActive(false);
-
-        Debug.Log("ChangeTeamSettingImage");
     }
 
     public void ChangeQuestImage()
@@ -39,8 +35,6 @@ public class LobbyBottomPanel : MonoBehaviour
         _questPanel.SetActive(true);
         _storePanel.SetActive(false);
         _optionPanel.SetActive(false);
-
-        Debug.Log("ChangeQuestImage");
     }
 
     public void ChangeStoreImage()
@@ -50,8 +44,6 @@ public class LobbyBottomPanel : MonoBehaviour
         _questPanel.SetActive(false);
         _storePanel.SetActive(true);
         _optionPanel.SetActive(false);
-
-        Debug.Log("ChangeStoreImage");
     }
 
     public void ChangeOptionImage()
@@ -61,7 +53,5 @@ public class LobbyBottomPanel : MonoBehaviour
         _questPanel.SetActive(false);
         _storePanel.SetActive(false);
         _optionPanel.SetActive(true);
-
-        Debug.Log("ChangeOptionImage");
     }
 }

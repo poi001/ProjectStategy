@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 public static class EventBus
 {
-    private static readonly Dictionary<EGameState, UnityEvent> Events = new();
+    public static readonly Dictionary<EGameState, UnityEvent> Events = new();
 
     // 이벤트 등록
     public static void Register(EGameState gameState, UnityAction action)
