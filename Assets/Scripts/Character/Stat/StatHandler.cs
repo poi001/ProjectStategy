@@ -95,6 +95,13 @@ public class StatHandler
         else
             CoroutineManager.Instance.StopManagedCoroutine(key);
     }
+    public void DeleteApplyStat_RemoveAll(ECharacterStatType statType, StatModifier modifier, string key = null)
+    {
+        if (string.IsNullOrEmpty(key))
+            _stat._statDict[statType].RemoveAllModifier(modifier);
+        else
+            CoroutineManager.Instance.StopManagedCoroutine(key);
+    }
 
     // 대미지 계산
     private float CalcDamage(float damage, EDamageType damageType, CharacterStat stat)

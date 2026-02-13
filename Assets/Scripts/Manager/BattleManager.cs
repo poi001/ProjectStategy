@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -9,13 +10,20 @@ public class BattleManager : SingletonWithScene<BattleManager>, IManagerWithScen
     [SerializeField] private Transform[] _playerSpawnPosArray;
     [SerializeField] private Transform[] _enemySpawnPosArray;
 
-    // 캐릭터 오브젝트들
+    // 캐릭터 오브젝트들 ( 굳이 타입이 pair인 이유가 없을 거 같음 )
     private (GameObject, Character)[] _playerCharacters;
     private (GameObject, Character)[] _enemyCharacters;
+
+    // 그 외에 캐릭터 오브젝트들 ( 소환물 등 )
+    private Dictionary<int, List<Character>> _etcChatacterDict;
 
 
     public IEnumerator Init()
     {
+        // HP바, 캐릭터 소환, 캐릭터 스탯 적용 ( 레지스트를 각 클래스에서 해야 함 )
+        //EventBus.
+
+
         SetupCharacters(out _playerCharacters, PlayerDataScriptableObject.Instance.Memebers, _playerSpawnPosArray);
         SetupCharacters(out _enemyCharacters, PlayerDataScriptableObject.Instance.EnemyMemebers, _enemySpawnPosArray);
         yield return StartCoroutine(InitCharacters());
@@ -23,6 +31,11 @@ public class BattleManager : SingletonWithScene<BattleManager>, IManagerWithScen
         HPMPUICanvas hpmpUICanvas = UIManager.Instance.ShowUI(DefineClass.UI_HPMPBarUICanvas).GetComponent<HPMPUICanvas>();
         hpmpUICanvas.SpawnAllyHPMPBarUI(_playerCharacters);
         hpmpUICanvas.SpawnEnemyHPMPBarUI(_enemyCharacters);
+
+        //PlayerDataScriptableObject.Instance.MemebersPassive
+
+        // 카메라 설정
+        GameManager.Instance.UpdateCameraBounds();
 
         // 선택적으로 추가 처리
         // 예: AI 초기화, 카메라 위치 조정 등

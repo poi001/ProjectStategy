@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: Shadowheart
   m_EditorClassIdentifier: 
   Name: Shadowheart
-  Description: 
-  CharacterType: 2
+  CharacterType: 1
   WeaponType: 5
+  TierType: 0
+  RaceSynergyType: 0
+  WeaponSynergyType1: 0
+  WeaponSynergyType2: 0
   MaxHP: 0
   MaxMP: 0
   Armor: 0
@@ -31,7 +34,11 @@ MonoBehaviour:
   CriticalDamage: 0
   MoveSpeed: 0
   Stamina: 0
-  IncreasedDamage: 0
   Drain: 0
   Range: 0
+  RegenHPWhenHitting: 0
+  RegenMPWhenHitting: 5
+  ExtraDamageWhenHitting_AD: 0
+  ExtraDamageWhenHitting_AP: 0
+  IncreaseShieldQuantity: 1
   BasicAttackFactorySO: {fileID: 11400000, guid: 5178002117b8d64409c13138aa28061f, type: 2}

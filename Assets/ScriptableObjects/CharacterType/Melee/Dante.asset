@@ -13,11 +13,20 @@ MonoBehaviour:
   m_Name: Dante
   m_EditorClassIdentifier: 
   Name: Dante
-  Description: 
+  CharacterType: 0
+  WeaponType: 0
+  TierType: 0
+  RaceSynergyType: 0
+  WeaponSynergyType1: 0
+  WeaponSynergyType2: 0
   MaxHP: 0
   MaxMP: 0
   Armor: 0
+  ArmorPenetration_Flat: 0
+  ArmorPenetration_Percent: 0
   MagicResistance: 0
+  MagicResistancePenetration_Flat: 0
+  MagicResistancePenetration_Percent: 0
   AttackDamage: 0
   AbilityPower: 0
   AttackSpeed: 0
@@ -25,6 +34,11 @@ MonoBehaviour:
   CriticalDamage: 0
   MoveSpeed: 0
   Stamina: 0
-  IncreasedDamage: 0
   Drain: 0
   Range: 0
+  RegenHPWhenHitting: 0
+  RegenMPWhenHitting: 5
+  ExtraDamageWhenHitting_AD: 0
+  ExtraDamageWhenHitting_AP: 0
+  IncreaseShieldQuantity: 1
+  BasicAttackFactorySO: {fileID: 0}

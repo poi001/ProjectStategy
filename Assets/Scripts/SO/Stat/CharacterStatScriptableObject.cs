@@ -7,12 +7,16 @@ using UnityEngine;
 public class CharacterStatScriptableObject : ScriptableObject
 {
     [Header("Info")]
+    public float ID;
     public string Name;
-    public string Description;
 
     [Header("CharacterSetting")]
     public ECharacterType CharacterType;
     public EWeaponType WeaponType;
+    public ECharacterTierType TierType;
+    public ERaceSynergyType RaceSynergyType;
+    public EWeaponSynergyType WeaponSynergyType1;
+    public EWeaponSynergyType WeaponSynergyType2;
 
     [Header("Battle Stats")]
     public float MaxHP;

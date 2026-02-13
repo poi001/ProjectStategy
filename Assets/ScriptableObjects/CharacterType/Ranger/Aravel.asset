@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: Aravel
   m_EditorClassIdentifier: 
   Name: Aravel
-  Description: 
-  CharacterType: 2
+  CharacterType: 1
   WeaponType: 5
+  TierType: 2
+  RaceSynergyType: 1
+  WeaponSynergyType1: 7
+  WeaponSynergyType2: 0
   MaxHP: 700
   MaxMP: 50
   Armor: 45
@@ -31,7 +34,11 @@ MonoBehaviour:
   CriticalDamage: 10
   MoveSpeed: 0.6
   Stamina: 100
-  IncreasedDamage: 0
   Drain: 0
   Range: 5
+  RegenHPWhenHitting: 0
+  RegenMPWhenHitting: 5
+  ExtraDamageWhenHitting_AD: 0
+  ExtraDamageWhenHitting_AP: 0
+  IncreaseShieldQuantity: 1
   BasicAttackFactorySO: {fileID: 11400000, guid: 5178002117b8d64409c13138aa28061f, type: 2}

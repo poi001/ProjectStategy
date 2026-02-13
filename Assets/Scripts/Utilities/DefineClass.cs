@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public interface IManagerInterface
@@ -15,7 +16,7 @@ public interface IAttackAction
 }
 public interface IAttackObjectFactory
 {
-    public IAttackObject Create(EAttackType type, Vector3 pos);
+    public IAttackObject Create(Vector3 pos);
 }
 public interface IAttackObject
 {
@@ -25,17 +26,57 @@ public interface IMoveAction
 {
     public void Move();
 }
-public interface IPassive
-{
-    public void ApplyPassive();
-}
 public interface ISkill
 {
+    public IEnumerator StartBattleScene();
+    public void EndBattleScene();
+    public void Equip(Character character);
+    public void Unequip();
     public void ActiveSkill();
+    public void DeactiveSkill();
+    // 스탯 정보 주는 딕셔너리를 반환하는 함수
+    // 스택 반환
+    // 버프 시간 반환
+    // 버프 적용 타입 반환
+}
+public interface ISkill_Stat
+{
+
+}
+public interface ISkill_Effect
+{
+
+}
+public interface ISkill_Buff
+{
+
+}
+public interface ISkill_Stack
+{
+
+}
+public interface ISkill_Flat
+{
+
 }
 public interface IBuff
 {
-    public void ActiveBuff(bool isBuff);
+    public void Apply();
+    public void Remove();
+    public void SetPermanent(bool isItPermanent);
+    public void SetTimer(float time);
+}
+public interface ISkillStatSO
+{
+    public Dictionary<ECharacterStatType, float> GetApplyStatDict();
+    public int GetMaxStack();
+    public float GetDuring();
+    public EStatApplyType GetStatApplyType();
+    public EStackType GetStackType();
+}
+public interface ISkillEffectSO
+{
+
 }
 
 
@@ -94,8 +135,7 @@ public enum EStatApplyType
 public enum ECharacterType
 {
     Melee = 0,
-    Ranged,
-    Magician
+    Ranged
 }
 public enum EWeaponType
 {
@@ -104,6 +144,36 @@ public enum EWeaponType
     Axe,
     ShortSword,
     LongSpear,
+    Bow,
+    Staff
+}
+public enum ECharacterTierType
+{
+    Normal = 0,
+    Hero,
+    Legendary
+}
+public enum ESkillTierType
+{
+    Normal = 0,
+    Hero,
+    Legendary
+}
+public enum ERaceSynergyType
+{
+    Human = 0,
+    Elf,
+    Undead
+}
+public enum EWeaponSynergyType
+{
+    None = 0,
+    Sword,
+    ShotSword,
+    Axe,
+    LongSpear,
+    Shield,
+    Blunt,
     Bow,
     Staff
 }
@@ -133,9 +203,16 @@ public enum EDamageType
     AP,
     True
 }
+public enum EStackType
+{
+    Attack = 0,
+    Damaged,
+    Skill,
+    Move
+}
 
 
-public class DefineClass
+public static class DefineClass
 {
     // 팀 최대 인원
     public const int NumberOfPlayers = 5;

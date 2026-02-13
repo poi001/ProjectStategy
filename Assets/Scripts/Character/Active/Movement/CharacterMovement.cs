@@ -6,11 +6,11 @@ public abstract class CharacterMovement
     protected Character character;
 
     // 카메라
-    protected Camera cam;
-    protected float minX;
-    protected float maxX;
-    protected float minY;
-    protected float maxY;
+    //protected Camera cam;
+    //protected float minX;
+    //protected float maxX;
+    //protected float minY;
+    //protected float maxY;
 
     // 가중치 ( 각각 가중치가 높을 시 순서대로 '고집 셈', '개인 공간 중시', '겁 많음'  )
         // 고집 ( 너무 낮으면: 목적이 흐려짐, 캐릭터가 우왕좌왕 ), ( 너무 높으면: 로봇처럼 직선 이동, 다른 보정을 무시 )
@@ -31,7 +31,7 @@ public abstract class CharacterMovement
     public void UpdateMovement()
     {
         // 카메라 해상도를 Update
-        UpdateBounds();
+        //UpdateBounds();
 
         // 움직임
         Movement();
@@ -40,23 +40,25 @@ public abstract class CharacterMovement
         FlipCharacter();
     }
 
-    private void UpdateBounds()
-    {
-        cam = Camera.main;
-        float height = cam.orthographicSize;
-        float width = height * cam.aspect;
+    //private void UpdateBounds()
+    //{
+    //    GameManager.Instance.Cam
+    //    //cam = Camera.main;
+    //    float height = cam.orthographicSize;
+    //    float width = height * cam.aspect;
 
-        minX = -width;
-        maxX = width;
-        minY = -height;
-        maxY = height;
-    }
+    //    minX = -width;
+    //    maxX = width;
+    //    minY = -height;
+    //    maxY = height;
+    //}
 
     private void Movement()
     {
         character.Direction = GetFinalMoveDir();
         character.transform.position += (Vector3)character.Direction * Time.deltaTime * character.Stats.MoveSpeed;
         ClampPosition();
+        character.OnMove?.Invoke();
     }
 
     private void FlipCharacter()
@@ -76,6 +78,10 @@ public abstract class CharacterMovement
     protected void ClampPosition()
     {
         Vector3 pos = character.transform.position;
+        float minX = GameManager.Instance.CamMinX;
+        float maxX = GameManager.Instance.CamMaxX;
+        float minY = GameManager.Instance.CamMinY;
+        float maxY = GameManager.Instance.CamMaxY;
 
         pos.x = Mathf.Clamp(pos.x, minX, maxX);
         pos.y = Mathf.Clamp(pos.y, minY, maxY);
@@ -109,6 +115,10 @@ public abstract class CharacterMovement
     {
         Vector3 avoidance = Vector3.zero;
         Vector3 pos = character.transform.position;
+        float minX = GameManager.Instance.CamMinX;
+        float maxX = GameManager.Instance.CamMaxX;
+        float minY = GameManager.Instance.CamMinY;
+        float maxY = GameManager.Instance.CamMaxY;
 
         float dangerDist = 1.5f;
 

@@ -11,6 +11,7 @@ public class HPMPUICanvas : UIBase
 
     public override IEnumerator Init()
     {
+        // 수정 예정 ( 배틀매니저에서 ui를 소환하는 걸로 )
         EventBus.Register(EGameState.Battle, EventBusRegistDelegate_ShowUI);
 
         yield return new WaitUntil(() => EventBus.Events[EGameState.Battle] != null);

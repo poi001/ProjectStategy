@@ -15,6 +15,7 @@ public class Stat
 
     public void AddModifier(StatModifier modifier_) => _modifiers.Add(modifier_);
     public void RemoveModifier(StatModifier modifier_) => _modifiers.Remove(modifier_);
+    public void RemoveAllModifier(StatModifier modifier_) => _modifiers.RemoveAll(x => x == modifier_);
     public void ClearModifier() => _modifiers.Clear();
     public List<StatModifier> GetModifierList() => _modifiers;
 

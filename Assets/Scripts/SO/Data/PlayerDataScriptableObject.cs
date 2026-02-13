@@ -12,16 +12,14 @@ public class PlayerDataScriptableObject : ScriptableObjectSingleton<PlayerDataSc
     //public float Gold;
 
     // 캐릭터
-    [HideInInspector]
-    public GameObject[] Memebers = new GameObject[DefineClass.NumberOfPlayers];
-    [HideInInspector]
-    public GameObject[] EnemyMemebers = new GameObject[DefineClass.NumberOfPlayers];
+    [HideInInspector] public GameObject[] Memebers = new GameObject[DefineClass.NumberOfPlayers];
+    [HideInInspector] public GameObject[] EnemyMemebers = new GameObject[DefineClass.NumberOfPlayers];
 
     // 전투 타입
-    [HideInInspector]
-    public ECombatType[] MemebersCombatType = new ECombatType[DefineClass.NumberOfPlayers];
-    [HideInInspector]
-    public ECombatType[] EnemyMemebersCombatType = new ECombatType[DefineClass.NumberOfPlayers];
+    [HideInInspector] public ECombatType[] MemebersCombatType = new ECombatType[DefineClass.NumberOfPlayers];
+    [HideInInspector] public ECombatType[] EnemyMemebersCombatType = new ECombatType[DefineClass.NumberOfPlayers];
 
-    // 아이템
+    // 패시브
+    [HideInInspector] public PassiveBase[] MemebersPassive = new PassiveBase[DefineClass.NumberOfPlayers];
+    [HideInInspector] public PassiveBase[] EnemyMemebersPassive = new PassiveBase[DefineClass.NumberOfPlayers];
 }

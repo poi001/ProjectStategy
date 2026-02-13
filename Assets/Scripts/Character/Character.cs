@@ -40,8 +40,7 @@ public class Character : MonoBehaviour
     public Action OnUseMana;
     public Action OnUpdate;
     public Action OnChangePassive;
-    public Action OnChangeSkill;
-    public Action OnChangeUltSkill;
+    public Action OnMove;
     //구현해야 할 것
     public Action OnAttack;
     public Action OnSkill;
@@ -54,8 +53,6 @@ public class Character : MonoBehaviour
         OnUseMana = null;
         OnUpdate = null;
         OnChangePassive = null;
-        OnChangeSkill = null;
-        OnChangeUltSkill = null;
 
         OnAttack = null;
         OnSkill = null;
@@ -107,10 +104,6 @@ public class Character : MonoBehaviour
                 Movement = new DefensiveMovement(this);
                 AttackAction = new RangedAttackAction(this);
                 break;
-            case ECharacterType.Magician:
-                Movement = new BalancedMovement(this);
-                AttackAction = new RangedAttackAction(this);
-                break;
             default:
                 break;
         }
@@ -141,26 +134,11 @@ public class Character : MonoBehaviour
         transform.localScale = localScale;
     }
 
-    public void SpawnAttackObject(EAttackType type)
+    public void SpawnAttackObject()
     {
         if (_statSO.BasicAttackFactorySO == null) return;
 
-        IAttackObject objAndInterface = null;
-
-        switch (type)
-        {
-            case EAttackType.BasicAttack:
-                objAndInterface = _statSO.BasicAttackFactory.Create(EAttackType.BasicAttack, MuzzleTransform.position);
-                break;
-            case EAttackType.Passive:
-                objAndInterface = _statSO.BasicAttackFactory.Create(EAttackType.Passive, MuzzleTransform.position);
-                break;
-            case EAttackType.Skill:
-                objAndInterface = _statSO.BasicAttackFactory.Create(EAttackType.Skill, MuzzleTransform.position);
-                break;
-            default:
-                break;
-        }
+        IAttackObject objAndInterface = _statSO.BasicAttackFactory.Create(MuzzleTransform.position);
 
         objAndInterface.Init(this);
     }
